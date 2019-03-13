@@ -1,18 +1,18 @@
-package org.ub.government.sispdb.master.ikan_subkelas;
+package org.ub.government.sispdb.master.ikan_jenis;
 
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 
-import org.ub.government.sispdb.master.ikan_subkelas.IkanSubKelasView.OnViewListener;
-import org.ub.government.sispdb.model.IkanSubKelas;
+import org.ub.government.sispdb.master.ikan_jenis.IkanJenisView.OnViewListener;
+import org.ub.government.sispdb.model.IkanJenis;
 import org.ub.government.sispdb.model_enum.EnumStatusOperasiForm;
 
-public class IkanSubKelasController implements OnViewListener{
-	protected IkanSubKelasModel model;
-	protected IkanSubKelasView view;
+public class IkanJenisController implements OnViewListener{
+	protected IkanJenisModel model;
+	protected IkanJenisView view;
 
-	public IkanSubKelasController(IkanSubKelasView view) {
-		model = new IkanSubKelasModel();
+	public IkanJenisController(IkanJenisView view) {
+		model = new IkanJenisModel();
 		this.view = view;
 	}
 
@@ -57,7 +57,7 @@ public class IkanSubKelasController implements OnViewListener{
 			/*
 			 * CEK APAKAH SUDAH DIPAKAI MELAKUKAN TRANSAKSI
 			 */
-			if (model.itemHeader.getIkanJenisSet().size() >0) isValidDelete = false;
+			if (model.itemHeader.getTangkapItemsSet().size() >0) isValidDelete = false;
 			if (JOptionPane.showConfirmDialog(view, "Yakin hapus data", "Konfirm Hapus", JOptionPane.OK_CANCEL_OPTION)==JOptionPane.CANCEL_OPTION) isValidDelete = false;
 			
 			if (isValidDelete) {
@@ -117,8 +117,8 @@ public class IkanSubKelasController implements OnViewListener{
 			if (event !=null) {
 		        try{
                     int selectedRow = view.getjTable1().getSelectedRow();
-                    IkanSubKelas domainBean = new IkanSubKelas();
-                    domainBean = (IkanSubKelas) model.tableModelHeader.get(selectedRow);
+                    IkanJenis domainBean = new IkanJenis();
+                    domainBean = (IkanJenis) model.tableModelHeader.get(selectedRow);
                     model.itemHeader = domainBean;
                     
                     view.readBinderHeader();

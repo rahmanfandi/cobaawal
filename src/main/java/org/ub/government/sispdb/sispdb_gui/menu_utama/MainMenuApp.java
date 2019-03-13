@@ -11,6 +11,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import org.ub.government.sispdb.master.ikan_jenis.IkanJenisView;
 import org.ub.government.sispdb.master.ikan_subkelas.IkanSubKelasView;
 import org.ub.government.sispdb.sispdb_gui.master_ikanjenis.IkanJenis_IntFrame;
 import org.ub.government.sispdb.sispdb_gui.master_ikansubkelas.IkanSubKelas_IntFrame;
@@ -27,7 +28,7 @@ public class MainMenuApp extends MainMenuFrame implements MainMenuListenerInter{
 
     WilayahIntFrame masterWilayahView = null;
     
-    IkanJenis_IntFrame masterJenisIkanView = null;
+    IkanJenisView masterJenisIkanView = null;
     IkanSubKelasView masterSubKelasView = null;
 
     TabulasiPerikananLautIntFrame tabulasiPerikananLautView = null;
@@ -43,8 +44,8 @@ public class MainMenuApp extends MainMenuFrame implements MainMenuListenerInter{
         getMenuItemPengguna().addActionListener(e -> menuItem_SettingPengguna_ActionPerformed(e));
         getMenuItemLogPengguna().addActionListener(e -> menuItem_SettingLogPengguna_ActionPerformed(e));
 
-        getMenuItemIkan().addActionListener(e -> menuItem_MasterIkan_ActionPerformed(e));
-        getMenuItemIkan().setVisible(false);
+        getMenuItemIkan().addActionListener(e -> menuItem_MasterIkan_ActionPerformed(e)); //TIDAK ADA
+        getMenuItemIkan().setVisible(false); //TIDAK ADA MAKANYA DI UN-VISIBLE
         
         getMenuItemJenisIkan().addActionListener(e -> menuItem_MasterJenisIkan_ActionPerformed(e));
         getMenuItemSubKelas().addActionListener(e -> menuItem_MasterSubKelas_ActionPerformed(e));
@@ -84,7 +85,7 @@ public class MainMenuApp extends MainMenuFrame implements MainMenuListenerInter{
 
     @Override
     public void menuItem_MasterJenisIkan_ActionPerformed(ActionEvent evt) {
-        if (masterJenisIkanView ==null) masterJenisIkanView = new IkanJenis_IntFrame();
+        if (masterJenisIkanView ==null) masterJenisIkanView = new IkanJenisView();
         if (! masterJenisIkanView.isShowing()) {
             Dimension dim = new Dimension(500, 500);
             masterJenisIkanView.setPreferredSize(dim);
