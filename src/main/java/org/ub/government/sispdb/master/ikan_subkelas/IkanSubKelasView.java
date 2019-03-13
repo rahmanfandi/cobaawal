@@ -30,6 +30,8 @@ public class IkanSubKelasView extends FormTemplate1_IntFrame{
 	 */
 		interface OnViewListener {
 			void aksiBtnReloadFromDb();
+			void aksiBtnFilterFromDb();
+			
 			void aksiBtnNewForm();
 			void aksiBtnEditForm();
 			void aksiBtnDeleteForm();
@@ -88,7 +90,7 @@ public class IkanSubKelasView extends FormTemplate1_IntFrame{
 		
 		
 		public void initListener(){
-//			btnSearch.addClickListener(e -> onViewListener.aksiBtnNewForm());
+			getBtnFilter().addActionListener(e -> onViewListener.aksiBtnFilterFromDb());
 //			btnHelp.addClickListener(e -> onViewListener.aksiBtnEditForm());
 //			btnPrintForm.addClickListener(e -> onViewListener.aksiBtnDeleteForm());
 
@@ -425,11 +427,13 @@ public class IkanSubKelasView extends FormTemplate1_IntFrame{
             getTf_ID().setText(model.itemHeader.getKode1());
             getTf_Description().setText(model.itemHeader.getDescription());
             getTa_Notes().setText(model.itemHeader.getNotes());
+            getjCheckBox1().setSelected(model.itemHeader.isStatusActive());
 	    }
 		public void writeBinderHeader() {
 			model.itemHeader.setKode1(getTf_ID().getText().trim());
 			model.itemHeader.setDescription(getTf_Description().getText().trim());
 			model.itemHeader.setNotes(getTa_Notes().getText().trim());
+			model.itemHeader.setStatusActive(getjCheckBox1().isSelected());
 		}
 
 //		@Override

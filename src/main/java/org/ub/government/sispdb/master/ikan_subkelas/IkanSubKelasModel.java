@@ -158,12 +158,14 @@ public class IkanSubKelasModel {
 		/*
 		 * NOTES: SubKelasIkan Sama semua
 		 */
-		IkanSubKelas returnValue = new IkanSubKelas();
+//		IkanSubKelas returnValue = new IkanSubKelas();
+		IkanSubKelas returnValue = null;
 		List<IkanSubKelas> listToFind = ikanSubKelasJpaService.findAllByField("kode1", kodeToCek.trim(), null);
 		
 		for (IkanSubKelas domain: listToFind) {
 			try {
 //				if (domain.getFdivisionBean().getFcompanyBean().equals(fcompanyBean) ) {
+					returnValue = new IkanSubKelas();
 					returnValue = domain;
 					break;
 //				}
@@ -172,6 +174,7 @@ public class IkanSubKelasModel {
 		}
 		return returnValue;
 	}
+	
 	
 	public void reloadListHeader(){
 		try {

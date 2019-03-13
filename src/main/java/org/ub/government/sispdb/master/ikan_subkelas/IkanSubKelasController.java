@@ -1,5 +1,6 @@
 package org.ub.government.sispdb.master.ikan_subkelas;
 
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 
 import org.ub.government.sispdb.master.ikan_subkelas.IkanSubKelasView.OnViewListener;
@@ -20,10 +21,16 @@ public class IkanSubKelasController implements OnViewListener{
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public void aksiBtnFilterFromDb() {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	public void aksiBtnNewForm() {
 		model.resetNewObject_Header();
+		model.itemHeader.setStatusActive(true);
 		
 		view.readBinderHeader();
 		view.getTf_ID().requestFocus();
@@ -46,32 +53,43 @@ public class IkanSubKelasController implements OnViewListener{
 	@Override
 	public void aksiBtnDeleteForm() {
 		if (model.statusOperasiForm.equals(EnumStatusOperasiForm.OPEN)) {
-			model.statusOperasiForm = EnumStatusOperasiForm.DEL_STAT;
-			model.deleteFromDatabase(null);
-			view.updateDataGrid1();
+			boolean isValidDelete = true;
+			/*
+			 * CEK APAKAH SUDAH DIPAKAI MELAKUKAN TRANSAKSI
+			 */
+			if (model.itemHeader.getIkanJenisSet().size() >0) isValidDelete = false;
+			if (JOptionPane.showConfirmDialog(view, "Yakin hapus data", "Konfirm Hapus", JOptionPane.OK_CANCEL_OPTION)==JOptionPane.CANCEL_OPTION) isValidDelete = false;
 			
-			model.resetNewObject_Header();
-			view.readBinderHeader();
-			
-			model.statusOperasiForm = EnumStatusOperasiForm.OPEN;
+			if (isValidDelete) {
+				model.statusOperasiForm = EnumStatusOperasiForm.DEL_STAT;
+				
+				model.deleteFromDatabase(null);
+				view.updateDataGrid1();
+				
+				model.resetNewObject_Header();
+				view.readBinderHeader();
+				
+				model.statusOperasiForm = EnumStatusOperasiForm.OPEN;
+			}
 		}
-		
 		
 	}
 
 	@Override
 	public void aksiBtnSaveForm() {
-		// TODO Auto-generated method stub
 		view.writeBinderHeader();
-		
-//		model.ikanSubKelasJpaService.updateObject(model.itemHeader);
-		model.saveToDatabase();
-
-		//Update View
-		view.updateDataGrid1();
-		
-		model.statusOperasiForm = EnumStatusOperasiForm.OPEN;
-		view.setFormButtonAndTextState();
+		if (model.isKodeSudahAdaPerCompany(model.itemHeader.getKode1(), null) ==null) {
+			
+			model.saveToDatabase();
+	
+			//Update View
+			view.updateDataGrid1();
+			
+			model.statusOperasiForm = EnumStatusOperasiForm.OPEN;
+			view.setFormButtonAndTextState();
+		}else {
+			JOptionPane.showMessageDialog(view, "Kode Sudah Ada", "Confilct Code", JOptionPane.ERROR_MESSAGE);
+		}
 
 	}
 
@@ -85,13 +103,11 @@ public class IkanSubKelasController implements OnViewListener{
 
 	@Override
 	public void aksiBtnCloseForm() {
-		// TODO Auto-generated method stub
-		
+		view.dispose();
 	}
 
 	@Override
 	public void aksiPrintForm() {
-		// TODO Auto-generated method stub
 		
 	}
 
