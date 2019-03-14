@@ -18,13 +18,22 @@ public class IkanSubKelasController implements OnViewListener{
 
 	@Override
 	public void aksiBtnReloadFromDb() {
-		// TODO Auto-generated method stub
+		model.reloadListHeader();
+		model.reloadListOthers();
+		
+		view.reloadDataProviderHeader();
+		view.reloadDataProviderOthers();
+		
+		view.reloadDataGrid1();
+		view.reloadDataGrid2();
+		view.reloadComponentComboBox();
 		
 	}
 	@Override
-	public void aksiBtnFilterFromDb() {
+	public void aksiBtnFilter() {
 		
-//		view.filter_Data()
+//		view.setTableModelFilter(0);
+		view.setTableModelOrFilter();
 	}
 
 	@Override
@@ -42,12 +51,18 @@ public class IkanSubKelasController implements OnViewListener{
 
 	@Override
 	public void aksiBtnEditForm() {
-		view.readBinderHeader();
 		
-		view.getTf_Description().requestFocus();
+		if (view.getjTable1().getSelectedRow() <0) {
+			JOptionPane.showMessageDialog(view, "Belum ada data yang dipilih", "Warning", JOptionPane.WARNING_MESSAGE);
+		}else {
 		
-		model.statusOperasiForm = EnumStatusOperasiForm.EDIT_FORM;
-		view.setFormButtonAndTextState();		
+			view.readBinderHeader();
+			
+			view.getTf_Description().requestFocus();
+			
+			model.statusOperasiForm = EnumStatusOperasiForm.EDIT_FORM;
+			view.setFormButtonAndTextState();
+		}
 	}
 
 	@Override
@@ -78,7 +93,17 @@ public class IkanSubKelasController implements OnViewListener{
 	@Override
 	public void aksiBtnSaveForm() {
 		view.writeBinderHeader();
-		if (model.isKodeSudahAdaPerCompany(model.itemHeader.getKode1(), null) ==null) {
+		boolean isValidKodeKembar = true;
+		boolean isValidIsian = true;
+		
+		//Pengecekan kode kembar hanya untuk Add New Saja
+		if (model.statusOperasiForm.equals(EnumStatusOperasiForm.ADD_NEW)) {
+			if (model.isKodeSudahAdaPerCompany(model.itemHeader.getKode1(), null) !=null) {
+				isValidKodeKembar =false;
+			}
+		}//end if status operasiform
+				
+		if (isValidKodeKembar && isValidIsian) {
 			
 			model.saveToDatabase();
 	
@@ -88,7 +113,8 @@ public class IkanSubKelasController implements OnViewListener{
 			model.statusOperasiForm = EnumStatusOperasiForm.OPEN;
 			view.setFormButtonAndTextState();
 		}else {
-			JOptionPane.showMessageDialog(view, "Kode Sudah Ada", "Confilct Code", JOptionPane.ERROR_MESSAGE);
+			if (isValidKodeKembar ==false) JOptionPane.showMessageDialog(view, "Kode Sudah Pernah Ada/Dipakai", "Confilct Code", JOptionPane.ERROR_MESSAGE);
+			if (isValidIsian ==false) JOptionPane.showMessageDialog(view, "Isian masih belum Valid", "Isian tidak Balid", JOptionPane.ERROR_MESSAGE);
 		}
 
 	}
@@ -115,15 +141,17 @@ public class IkanSubKelasController implements OnViewListener{
 	public void aksiTable1_ListSelection(ListSelectionEvent event) {
 		try {
 			if (event !=null) {
-		        try{
-                    int selectedRow = view.getjTable1().getSelectedRow();
-                    IkanSubKelas domainBean = new IkanSubKelas();
-                    domainBean = (IkanSubKelas) model.tableModelHeader.get(selectedRow);
-                    model.itemHeader = domainBean;
-                    
-                    view.readBinderHeader();
-                    
-		        }catch(Exception ex){}
+				if(! (model.statusOperasiForm.equals(EnumStatusOperasiForm.ADD_NEW) || model.statusOperasiForm.equals(EnumStatusOperasiForm.EDIT_FORM)) ) {
+			        try{
+	                    int selectedRow = view.getjTable1().getSelectedRow();
+	                    IkanSubKelas domainBean = new IkanSubKelas();
+	                    domainBean = (IkanSubKelas) model.tableModelHeader.get(selectedRow);
+	                    model.itemHeader = domainBean;
+	                    
+	                    view.readBinderHeader();
+			        
+			        }catch(Exception ex){}
+				}
 			} //end if
 		}catch (Exception e) {
 			// TODO: handle exception

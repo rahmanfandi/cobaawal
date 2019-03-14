@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.ub.government.sispdb.commons.CommonLogHelper;
 import org.ub.government.sispdb.model.IkanJenis;
+import org.ub.government.sispdb.model.IkanSubKelas;
 import org.ub.government.sispdb.model.IkanJenis;
 import org.ub.government.sispdb.model.PemProv;
 import org.ub.government.sispdb.model.TabulatorEnumerator;
@@ -26,6 +27,7 @@ import org.ub.government.sispdb.model.jpaservice.UnitKerjaJpaServiceImpl;
 import org.ub.government.sispdb.model.jpaservice.UserLogJpaService;
 import org.ub.government.sispdb.model_enum.EnumOrganizationLevel;
 import org.ub.government.sispdb.model_enum.EnumStatusOperasiForm;
+import org.ub.government.sispdb.model_table.ComboBoxModel_IkanSubKelas;
 import org.ub.government.sispdb.model_table.TableModel_IkanJenis;
 import org.ub.government.sispdb.model_table.TableModel_IkanJenis;
 
@@ -38,7 +40,7 @@ public class IkanJenisModel {
 	//1. DAO SERVICE: Utama
 	protected SysvarJpaService sysvarJpaService;
 	protected IkanJenisJpaService ikanJenisJpaService;
-//	private FRegionJpaService fRegionJpaService;
+	private IkanSubKelasJpaService ikanSubKelasJpaService;
 	
 	//1.2 Dao Service Pembantu: ComboBox dll
 	protected UnitKerjaJpaService unitKerjaJpaService;
@@ -58,12 +60,13 @@ public class IkanJenisModel {
 	 */
 	protected Map<Integer, IkanJenis> listHeader = new HashMap<>();
 	protected TableModel_IkanJenis tableModelHeader = new TableModel_IkanJenis(new ArrayList<>());
+	protected ComboBoxModel_IkanSubKelas comboModel_Group2 = null;
 	
 //		Set List<FtSalesd> listDetil = new ArrayList<FtSalesd>();
 
 	//3.2 LIST Pembantu: ComboBox dll
 	protected Set<UnitKerja> listGrup0 = new HashSet<UnitKerja>();
-//	protected Set<FRegion> listGrup10 = new HashSet<FRegion>();
+	protected List<IkanSubKelas> listGrup1 = new ArrayList<IkanSubKelas>();
 				
 	//4. Variable Others: Utama dan Pendukung
 //	protected String statusOperasiForm = "OPEN"; //Form Baru ini tidak Pakai
@@ -83,6 +86,7 @@ public class IkanJenisModel {
 	public void initVariable(){
 		sysvarJpaService = new SysvarJpaServiceImpl();
 		ikanJenisJpaService = new IkanJenisJpaServiceImpl();
+		ikanSubKelasJpaService = new IkanSubKelasJpaServiceImpl();
 		
 		unitKerjaJpaService = new UnitKerjaJpaServiceImpl();
 		userActive = new TabulatorEnumerator();
@@ -256,6 +260,7 @@ public class IkanJenisModel {
 		}catch (Exception e) {
 		}
 		
+		listGrup1 = ikanSubKelasJpaService.findAll();
 		
 	}
 	public void resetNewObject_Header(){

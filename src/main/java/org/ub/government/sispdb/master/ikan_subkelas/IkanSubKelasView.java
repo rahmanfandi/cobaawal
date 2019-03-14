@@ -7,14 +7,20 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableRowSorter;
 
 import org.ub.government.sispdb.model_enum.EnumStatusOperasiForm;
+import org.ub.government.sispdb.model_table.TableModel_IkanJenis;
 import org.ub.government.sispdb.model_table.TableModel_IkanSubKelas;
 import org.ub.government.sispdb.sispdb_gui.master_template.FormTemplate1_IntFrame;
 
@@ -23,14 +29,15 @@ public class IkanSubKelasView extends FormTemplate1_IntFrame{
 	protected IkanSubKelasController controller;
 	protected IkanSubKelasModel model;
 	
-	
+	private TableRowSorter<TableModel_IkanSubKelas> tableRowSorter;
+
 	/*
 	 * #3 Interface Listener: agar Class Controller yang memakai tahu itu Method dari mana
 	 * dengan mengunakan @Override
 	 */
 		interface OnViewListener {
 			void aksiBtnReloadFromDb();
-			void aksiBtnFilterFromDb();
+			void aksiBtnFilter();
 			
 			void aksiBtnNewForm();
 			void aksiBtnEditForm();
@@ -76,12 +83,14 @@ public class IkanSubKelasView extends FormTemplate1_IntFrame{
 		}
 		
 		public void initComponentView(){
-			//Masukkan Form Component
-			
+			this.setTitle("SUB KELAS");
+			//Menonaktifkan komponen-komponent yang tidak perlu
 			getLabelGroup1().setVisible(false);
 			getLabelGroup2().setVisible(false);
 			getCombo_Group1().setVisible(false);
 			getCombo_Group2().setVisible(false);
+			
+			getBtnFilter().setVisible(false);
 			
 			setFormButtonAndTextState();
 			
@@ -90,7 +99,8 @@ public class IkanSubKelasView extends FormTemplate1_IntFrame{
 		
 		
 		public void initListener(){
-			getBtnFilter().addActionListener(e -> onViewListener.aksiBtnFilterFromDb());
+			getBtnReloadDB().addActionListener(e -> onViewListener.aksiBtnReloadFromDb());
+			getBtnFilter().addActionListener(e -> onViewListener.aksiBtnFilter());
 //			btnHelp.addClickListener(e -> onViewListener.aksiBtnEditForm());
 //			btnPrintForm.addClickListener(e -> onViewListener.aksiBtnDeleteForm());
 
@@ -105,7 +115,25 @@ public class IkanSubKelasView extends FormTemplate1_IntFrame{
 			
 //			fieldHeaderCell1.addValueChangeListener(e -> onViewListener.aksiFieldHeaderCell1(e));
 //			fieldHeaderCell2.addValueChangeListener(e -> onViewListener.aksiFieldHeaderCell2(e));
-
+			getTf_Filter1().getDocument().addDocumentListener(new DocumentListener() {
+				
+				@Override
+				public void removeUpdate(DocumentEvent e) {
+					setTableModelOrFilter();
+				}
+				
+				@Override
+				public void insertUpdate(DocumentEvent e) {
+					setTableModelOrFilter();
+				}
+				
+				@Override
+				public void changedUpdate(DocumentEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			
 	        ListSelectionModel table1CellSelectionModel = getjTable1().getSelectionModel();
 	        table1CellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	        table1CellSelectionModel.addListSelectionListener(e -> onViewListener.aksiTable1_ListSelection(e));
@@ -141,36 +169,7 @@ public class IkanSubKelasView extends FormTemplate1_IntFrame{
 		
 		//### Not Override
 		public void reloadComponentComboBox(){
-			
-//			getComboTipeopname().setFilteringMode(FilteringMode.CONTAINS);
-//			getComboTipeopname().setNullSelectionAllowed(false);
-
-//			getComboTipeopname().addItem(0);
-//			getComboTipeopname().setItemCaption(0, "-- Pilih --");
-//			getComboTipeopname().addItem(1);
-//			getComboTipeopname().setItemCaption(1, "Semua Item");
-//			getComboTipeopname().addItem(2);		
-//			getComboTipeopname().setItemCaption(2, "Parsial");		
-//			getComboTipeopname().select(2);
-			
-//			getComboGrup1().setFilteringMode(FilteringMode.CONTAINS);
-//			getComboGrup1().setContainerDataSource(beanItemContainerGrup1);
-//			getComboGrup1().setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
-//			getComboGrup1().setFilteringMode(FilteringMode.CONTAINS);
-//			getComboGrup1().setNullSelectionAllowed(true);
-
-//			getComboSearch1().setFilteringMode(FilteringMode.CONTAINS);
-//			getComboSearch1().setContainerDataSource(getBeanItemContainerPromo());
-//			getComboSearch1().setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
-//			getComboSearch1().setFilteringMode(FilteringMode.CONTAINS);
-//			getComboSearch1().setNullSelectionAllowed(true);
-	//
-//			getComboFPromo().setFilteringMode(FilteringMode.CONTAINS);
-//			getComboFPromo().setContainerDataSource(getBeanItemContainerPromo());
-//			getComboFPromo().setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
-//			getComboFPromo().setFilteringMode(FilteringMode.CONTAINS);
-//			getComboFPromo().setNullSelectionAllowed(true);
-			
+						
 		}
 
 		public void reloadDataGrid1(){
@@ -188,6 +187,47 @@ public class IkanSubKelasView extends FormTemplate1_IntFrame{
 			//Tidak bisa otomatis saat: Jadi harus dipangil secara Manual
 			setGrid1Footer();	
 			
+			tableRowSorter = new TableRowSorter<TableModel_IkanSubKelas>(model.tableModelHeader);
+			getjTable1().setRowSorter(tableRowSorter);
+
+			
+		}
+
+		public void setTableModelOrFilter() {
+			RowFilter<TableModel_IkanSubKelas,Object> rowFilter = null;
+			
+			ArrayList<RowFilter<TableModel_IkanSubKelas, Object>> arrListFilters = new ArrayList<RowFilter<TableModel_IkanSubKelas,Object>>();
+			RowFilter<TableModel_IkanSubKelas,Object> kode1_Filter = null;
+			RowFilter<TableModel_IkanSubKelas,Object> desc_Filter = null;
+			
+		    try {
+		    		kode1_Filter = RowFilter.regexFilter("(?i)" + getTf_Filter1().getText(), getjTable1().getColumnModel().getColumnIndex("KODE1"));	//supaya tidak case Sensitif	
+		    		desc_Filter = RowFilter.regexFilter("(?i)" + getTf_Filter1().getText(), getjTable1().getColumnModel().getColumnIndex("DESKRIPSI"));		
+		    		arrListFilters.add(kode1_Filter);
+		    		arrListFilters.add(desc_Filter);
+		    } catch (java.util.regex.PatternSyntaxException e) {
+		      return;
+		    }
+		    try {
+		    		rowFilter = RowFilter.orFilter(arrListFilters);
+		    } catch (java.util.regex.PatternSyntaxException e) {
+		      return;
+		    }
+			
+		    tableRowSorter.setRowFilter(rowFilter);
+
+		}		
+		
+		
+		public void setTableModelFilter(int columnIndex) {
+		    RowFilter<TableModel_IkanSubKelas, Object> rf = null;
+		    // If current expression doesn't parse, don't update.
+		    try {
+		    		rf = RowFilter.regexFilter(getTf_Filter1().getText(), columnIndex);		    		
+		    } catch (java.util.regex.PatternSyntaxException e) {
+		      return;
+		    }
+		    tableRowSorter.setRowFilter(rf);
 		}
 		
 		public void updateDataGrid1() {
@@ -290,6 +330,10 @@ public class IkanSubKelasView extends FormTemplate1_IntFrame{
 //	        getjTable1().getColumnModel().getColumn(3).setCellRenderer(tableCellRendererNumber);        
 //	        getjTable1().getColumnModel().getColumn(6).setCellRenderer(tableCellRendererStok);
 			
+	        //supaya rownya yang bisa dipilih
+	        getjTable1().setCellSelectionEnabled(false);
+	        getjTable1().setRowSelectionAllowed(true);
+
 		}
 		
 		public void setGrid1Footer(){
@@ -383,26 +427,35 @@ public class IkanSubKelasView extends FormTemplate1_IntFrame{
 				getTf_Description().setEditable(false);
 				getTa_Notes().setEditable(false);
 				
-				getjTable1().setCellSelectionEnabled(true);
+		        getjTable1().setRowSelectionAllowed(true);
+				getjTable1().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 				getBtnNew().setEnabled(true);
 				getBtnEdit().setEnabled(true);
 				getBtnDelete().setEnabled(true);
+				getBtnReloadDB().setEnabled(true);
+				getBtnFilter().setEnabled(true);
+				getTf_Filter1().setEditable(true);
+				
 				getBtnSave().setEnabled(false);
 				getBtnCancel().setEnabled(false);
 
-				getjTable1().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 				
 			} else if (model.statusOperasiForm.equals(EnumStatusOperasiForm.ADD_NEW )){
 				getTf_ID().setEditable(true);
 				getTf_Description().setEditable(true);
 				getTa_Notes().setEditable(true);
 				
-				getjTable1().setCellSelectionEnabled(false);
+		        getjTable1().setRowSelectionAllowed(false);
 
 				getBtnNew().setEnabled(false);
 				getBtnEdit().setEnabled(false);
 				getBtnDelete().setEnabled(false);
+				getBtnReloadDB().setEnabled(false);
+				getBtnFilter().setEnabled(false);
+				getTf_Filter1().setEditable(false);
+				getjTable1().setCellSelectionEnabled(false);
+				
 				getBtnSave().setEnabled(true);
 				getBtnCancel().setEnabled(true);
 				
@@ -411,11 +464,15 @@ public class IkanSubKelasView extends FormTemplate1_IntFrame{
 				getTf_Description().setEditable(true);
 				getTa_Notes().setEditable(true);
 				
-				getjTable1().setCellSelectionEnabled(false);
+		        getjTable1().setRowSelectionAllowed(false);
 
 				getBtnNew().setEnabled(false);
 				getBtnEdit().setEnabled(false);
 				getBtnDelete().setEnabled(false);
+				getBtnReloadDB().setEnabled(false);
+				getBtnFilter().setEnabled(false);
+				getTf_Filter1().setEditable(false);
+				
 				getBtnSave().setEnabled(true);
 				getBtnCancel().setEnabled(true);
 			}		
@@ -467,7 +524,5 @@ public class IkanSubKelasView extends FormTemplate1_IntFrame{
 //			}
 //			
 //		}
-
-
 
 }

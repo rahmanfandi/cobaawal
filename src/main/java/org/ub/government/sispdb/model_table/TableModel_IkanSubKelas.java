@@ -51,11 +51,11 @@ public class TableModel_IkanSubKelas extends AbstractTableModel{
 //            return null;
 //        }
         switch(column){
-        case 0:
-            return ("KODE1");
-        case 1:
-            return("DESKRIPSI");
-        default:
+	        case 0:
+	            return ("KODE1");
+	        case 1:
+	            return("DESKRIPSI");
+	        default:
             return null;
         }
     }

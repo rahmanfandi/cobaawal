@@ -71,13 +71,18 @@ public class FormTemplate1_IntFrame extends javax.swing.JInternalFrame {
         return btnSave;
     }
 
-    public JComboBox<String> getCombo_Group1() {
+    public JComboBox getCombo_Group1() {
         return combo_Group1;
     }
 
-    public JComboBox<String> getCombo_Group2() {
+    public JComboBox getCombo_Group2() {
         return combo_Group2;
     }
+
+    public JButton getBtnReloadDB() {
+        return btnReloadDB;
+    }
+
 
     public JTable getjTable1() {
         return jTable1;
@@ -142,9 +147,9 @@ public class FormTemplate1_IntFrame extends javax.swing.JInternalFrame {
         label_ID = new javax.swing.JLabel();
         labeDescription = new javax.swing.JLabel();
         tf_ID = new javax.swing.JTextField();
-        combo_Group1 = new javax.swing.JComboBox<>();
+        combo_Group1 = new javax.swing.JComboBox();
         labelGroup1 = new javax.swing.JLabel();
-        combo_Group2 = new javax.swing.JComboBox<>();
+        combo_Group2 = new javax.swing.JComboBox();
         labelGroup2 = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
         tf_Description = new javax.swing.JTextField();
@@ -164,6 +169,7 @@ public class FormTemplate1_IntFrame extends javax.swing.JInternalFrame {
         btnFilter = new javax.swing.JButton();
         labelFooterNote_Title = new javax.swing.JLabel();
         labelFooterNote_Content = new javax.swing.JLabel();
+        btnReloadDB = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -179,11 +185,11 @@ public class FormTemplate1_IntFrame extends javax.swing.JInternalFrame {
 
         tf_ID.setText("jTextField1");
 
-        combo_Group1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        combo_Group1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         labelGroup1.setText("GROUP1");
 
-        combo_Group2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        combo_Group2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         labelGroup2.setText("GROUP2");
 
@@ -334,6 +340,13 @@ public class FormTemplate1_IntFrame extends javax.swing.JInternalFrame {
         labelFooterNote_Content.setText("jLabel2");
         labelFooterNote_Content.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
+        btnReloadDB.setText("Reload");
+        btnReloadDB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReloadDBActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -354,7 +367,9 @@ public class FormTemplate1_IntFrame extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tf_Filter1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnFilter)))
+                        .addComponent(btnFilter)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnReloadDB)))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -366,7 +381,8 @@ public class FormTemplate1_IntFrame extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(tf_Filter1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label_Filter1)
-                            .addComponent(btnFilter))
+                            .addComponent(btnFilter)
+                            .addComponent(btnReloadDB))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -396,6 +412,10 @@ public class FormTemplate1_IntFrame extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnFilterActionPerformed
 
+    private void btnReloadDBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReloadDBActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnReloadDBActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
@@ -403,9 +423,10 @@ public class FormTemplate1_IntFrame extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnFilter;
     private javax.swing.JButton btnNew;
+    private javax.swing.JButton btnReloadDB;
     private javax.swing.JButton btnSave;
-    private javax.swing.JComboBox<String> combo_Group1;
-    private javax.swing.JComboBox<String> combo_Group2;
+    private javax.swing.JComboBox combo_Group1;
+    private javax.swing.JComboBox combo_Group2;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
