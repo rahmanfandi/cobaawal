@@ -37,6 +37,9 @@ public class AlatTangkap {
 	@Column(name="DESCRIPTION", length=100)
 	private String description;
 			
+	@Column(name="NOTES", length=350)
+	private String notes;
+	
 	@Column(name="STATUS_ACTIVE")
 	private boolean statusActive = true;
 
@@ -102,6 +105,13 @@ public class AlatTangkap {
 	}
 	public void setModifiedBy(String modifiedBy) {
 		this.modifiedBy = modifiedBy;
+	}
+	
+	public String getNotes() {
+		return notes;
+	}
+	public void setNotes(String notes) {
+		this.notes = notes;
 	}
 	@Override
 	public int hashCode() {

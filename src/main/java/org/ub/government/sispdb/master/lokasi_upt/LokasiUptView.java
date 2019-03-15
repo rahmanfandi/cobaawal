@@ -1,4 +1,4 @@
-package org.ub.government.sispdb.master.ikan_jenis;
+package org.ub.government.sispdb.master.lokasi_upt;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -26,19 +26,23 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 
+import org.ub.government.sispdb.model.Desa;
 import org.ub.government.sispdb.model.IkanSubKelas;
+import org.ub.government.sispdb.model.JenisPerairan;
+import org.ub.government.sispdb.model.UnitKerja;
 import org.ub.government.sispdb.model_enum.EnumStatusOperasiForm;
 import org.ub.government.sispdb.model_table.ComboBoxModel_IkanSubKelas;
-import org.ub.government.sispdb.model_table.TableModel_IkanJenis;
+import org.ub.government.sispdb.model_table.TableModel_Upt;
 import org.ub.government.sispdb.model_table.TableModel_IkanSubKelas;
 import org.ub.government.sispdb.sispdb_gui.master_template.FormTemplate1_IntFrame;
+import org.ub.government.sispdb.sispdb_gui.master_template.FormTemplate2_IntFrame;
 
 
-public class IkanJenisView extends FormTemplate1_IntFrame{
-	protected IkanJenisController controller;
-	protected IkanJenisModel model;
+public class LokasiUptView extends FormTemplate2_IntFrame{
+	protected LokasiUptController controller;
+	protected LokasiUptModel model;
 	
-	private TableRowSorter<TableModel_IkanJenis> tableRowSorter;
+	private TableRowSorter<TableModel_Upt> tableRowSorter;
 	
 	/*
 	 * #3 Interface Listener: agar Class Controller yang memakai tahu itu Method dari mana
@@ -65,9 +69,9 @@ public class IkanJenisView extends FormTemplate1_IntFrame{
 		//######### Jangan Lupa deklarasinya dan DI BAWAH	
 		OnViewListener onViewListener; 
 		
-		public IkanJenisView() {
+		public LokasiUptView() {
 			super();
-			controller = new IkanJenisController(this);
+			controller = new LokasiUptController(this);
 			model = controller.model;
 			
 			//######### Jangan Lupa deklarasinya dan DARI ATAS
@@ -92,20 +96,24 @@ public class IkanJenisView extends FormTemplate1_IntFrame{
 		}
 		
 		public void initComponentView(){
-			this.setTitle("JENIS IKAN");
+			this.setTitle("LOKASI (UNIT KERJA)");
 			
 			
 //			getLabelGroup1().setVisible(false);
-			getLabelGroup2().setVisible(false);
+//			getLabelGroup2().setVisible(false);
 //			getCombo_Group1().setVisible(false);
-			getCombo_Group2().setVisible(false);
-
+//			getCombo_Group2().setVisible(false);
+			getLabeNotes().setVisible(false);
 			getBtnFilter().setVisible(false);
+			getTa_Notes().setVisible(false);
 
 			setFormButtonAndTextState();
 			
-			getLabelGroup1().setText("KELAS IKAN");
-
+			getLabeDescription().setText("ALAMAT");
+			getLabelGroup1().setText("DESA");
+			getLabelGroup2().setText("JENIS PERAIRAN");
+			getLabelGroup3().setText("UNIT KERJA");
+			
 			getjTable1().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			
 			
@@ -171,9 +179,9 @@ public class IkanJenisView extends FormTemplate1_IntFrame{
 //			dataProvider = new ListDataProvider<FArea>(model.getListHeader());
 //			dataProvider.refreshAll();
 			if (getTf_Filter1().getText().isEmpty()) {
-				model.tableModelHeader = new TableModel_IkanJenis(new ArrayList<>(model.listHeader.values()) );
+				model.tableModelHeader = new TableModel_Upt(new ArrayList<>(model.listHeader.values()) );
 			}else {
-				model.tableModelHeader = new TableModel_IkanJenis(new ArrayList<>(model.listHeader.values()) );
+				model.tableModelHeader = new TableModel_Upt(new ArrayList<>(model.listHeader.values()) );
 			}
 			
 		}	
@@ -181,17 +189,32 @@ public class IkanJenisView extends FormTemplate1_IntFrame{
 		//### Not Override
 		public void reloadComponentComboBox(){
 			//Change To Array
-			IkanSubKelas[] itemsArray = new IkanSubKelas[model.listGrup1.size()];
-			itemsArray = model.listGrup1.toArray(itemsArray);
-			
-			getCombo_Group1().setModel(new DefaultComboBoxModel<IkanSubKelas>(itemsArray));
-			getCombo_Group1().setRenderer(new ComboBoxGroup1Renderer());
-									
-			ComboBoxModel_IkanSubKelas myModel = new ComboBoxModel_IkanSubKelas(itemsArray);
-			getCombo_Group2().setModel(new DefaultComboBoxModel<IkanSubKelas>(itemsArray));
+			Desa[] itemsArray1 = new Desa[model.listGrup1.size()];
+			itemsArray1 = model.listGrup1.toArray(itemsArray1);
 
-			getCombo_Group2().setRenderer(new ComboBoxGroup1Renderer());
-			
+			JenisPerairan[] itemsArray2 = new JenisPerairan[model.listGrup2.size()];
+			itemsArray2 = model.listGrup1.toArray(itemsArray2);
+
+			UnitKerja[] itemsArray3 = new UnitKerja[model.listGrup3.size()];
+			itemsArray2 = model.listGrup3.toArray(itemsArray2);
+			try {
+				getCombo_Group1().setModel(new DefaultComboBoxModel<Desa>(itemsArray1));
+//				getCombo_Group1().setRenderer(new ComboBoxGroup1Renderer());
+			}catch (Exception e) {
+				e.printStackTrace();
+			}					
+			try {
+				getCombo_Group2().setModel(new DefaultComboBoxModel<JenisPerairan>(itemsArray2));
+//			getCombo_Group2().setRenderer(new ComboBoxGroup2Renderer());
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				getCombo_Group3().setModel(new DefaultComboBoxModel<UnitKerja>(itemsArray3));
+//				getCombo_Group3().setRenderer(new ComboBoxGroup3Renderer());
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		public void reloadDataGrid1(){
@@ -209,17 +232,17 @@ public class IkanJenisView extends FormTemplate1_IntFrame{
 			//Tidak bisa otomatis saat: Jadi harus dipangil secara Manual
 			setGrid1Footer();	
 			
-			tableRowSorter = new TableRowSorter<TableModel_IkanJenis>(model.tableModelHeader);
+			tableRowSorter = new TableRowSorter<TableModel_Upt>(model.tableModelHeader);
 			getjTable1().setRowSorter(tableRowSorter);
 			
 		}
 		
 		public void setTableModelOrFilter() {
-			RowFilter<TableModel_IkanJenis,Object> rowFilter = null;
+			RowFilter<TableModel_Upt,Object> rowFilter = null;
 			
-			ArrayList<RowFilter<TableModel_IkanJenis, Object>> arrListFilters = new ArrayList<RowFilter<TableModel_IkanJenis,Object>>();
-			RowFilter<TableModel_IkanJenis,Object> kode1_Filter = null;
-			RowFilter<TableModel_IkanJenis,Object> desc_Filter = null;
+			ArrayList<RowFilter<TableModel_Upt, Object>> arrListFilters = new ArrayList<RowFilter<TableModel_Upt,Object>>();
+			RowFilter<TableModel_Upt,Object> kode1_Filter = null;
+			RowFilter<TableModel_Upt,Object> desc_Filter = null;
 			
 		    try {
 		    		kode1_Filter = RowFilter.regexFilter("(?i)" + getTf_Filter1().getText(), getjTable1().getColumnModel().getColumnIndex("KODE1"));	//supaya tidak case Sensitif	
@@ -240,7 +263,7 @@ public class IkanJenisView extends FormTemplate1_IntFrame{
 		}		
 		
 		public void setTableModelFilter() {
-		    RowFilter<TableModel_IkanJenis, Object> rf = null;
+		    RowFilter<TableModel_Upt, Object> rf = null;
 		    // If current expression doesn't parse, don't update.
 		    try {
 		    		rf = RowFilter.regexFilter(getTf_Filter1().getText(), 0);
@@ -501,18 +524,22 @@ public class IkanJenisView extends FormTemplate1_IntFrame{
 	    public void readBinderHeader() {
             getTf_ID().setText(model.itemHeader.getKode1());
             getTf_Description().setText(model.itemHeader.getDescription());
-            getTa_Notes().setText(model.itemHeader.getNotes());
+//            getTa_Notes().setText(model.itemHeader.getNotes());
             getjCheckBox1().setSelected(model.itemHeader.isStatusActive());
             
-            getCombo_Group1().setSelectedItem( model.itemHeader.getIkanSubKelasBean()); 
+            getCombo_Group1().setSelectedItem( model.itemHeader.getDesaBean()); 
+            getCombo_Group2().setSelectedItem( model.itemHeader.getJenisPerairanBean()); 
+            getCombo_Group3().setSelectedItem( model.itemHeader.getUnitKerjaBean()); 
 	    }
 		public void writeBinderHeader() {
 			model.itemHeader.setKode1(getTf_ID().getText().trim());
 			model.itemHeader.setDescription(getTf_Description().getText().trim());
-			model.itemHeader.setNotes(getTa_Notes().getText().trim());
+//			model.itemHeader.setNotes(getTa_Notes().getText().trim());
 			model.itemHeader.setStatusActive(getjCheckBox1().isSelected());
 			
-			model.itemHeader.setIkanSubKelasBean((IkanSubKelas) getCombo_Group1().getSelectedItem()); 
+			model.itemHeader.setDesaBean((Desa) getCombo_Group1().getSelectedItem()); 
+			model.itemHeader.setJenisPerairanBean((JenisPerairan) getCombo_Group2().getSelectedItem()); 
+			model.itemHeader.setUnitKerjaBean((UnitKerja) getCombo_Group3().getSelectedItem()); 
 		}
 
 //		@Override
@@ -549,12 +576,12 @@ public class IkanJenisView extends FormTemplate1_IntFrame{
 
 }
 
-class ComboBoxGroup1Renderer extends JLabel implements ListCellRenderer<IkanSubKelas> {
+class ComboBoxGroup1Renderer extends JLabel implements ListCellRenderer<Desa> {
 	public ComboBoxGroup1Renderer() {
         setOpaque(true);
     }
     @Override
-    public Component getListCellRendererComponent(JList<? extends IkanSubKelas> list, IkanSubKelas domain, int index,
+    public Component getListCellRendererComponent(JList<? extends Desa> list, Desa domain, int index,
         boolean isSelected, boolean cellHasFocus) {
         if (domain ==null) {
         		return null;
@@ -581,7 +608,74 @@ class ComboBoxGroup1Renderer extends JLabel implements ListCellRenderer<IkanSubK
 	        return this;
         }
     }
-     
+}
+
+class ComboBoxGroup2Renderer extends JLabel implements ListCellRenderer<JenisPerairan> {
+	public ComboBoxGroup2Renderer() {
+        setOpaque(true);
+    }
+    @Override
+    public Component getListCellRendererComponent(JList<? extends JenisPerairan> list, JenisPerairan domain, int index,
+        boolean isSelected, boolean cellHasFocus) {
+        if (domain ==null) {
+        		return null;
+        }else {
+        
+	        String code = domain.getKode1();
+	//        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/" + code + ".png"));
+	        
+	//        setIcon(imageIcon);
+	//        setText("<html><font color=\"black\">" + country.getID() + "&nbsp;&nbsp;<small>" + country.getDescription() + "</small></font></html>");
+	//        setText("<html>" + content + "</html>");
+	        
+	//		String content2 = String.format("%20s %s", country.getKode1(), country.getDescription());
+			String content2 = String.format("%2s %-15s %s", "",domain.getKode1(), domain.getDescription()) ;
+	        setText(content2);
+	        
+	        if (isSelected) {
+	            setBackground(Color.YELLOW);
+	            setForeground(list.getSelectionForeground());
+	        } else {
+	            setBackground(list.getBackground());
+	            setForeground(list.getForeground());
+	        }
+	        return this;
+        }
+    }
+}
+
+class ComboBoxGroup3Renderer extends JLabel implements ListCellRenderer<UnitKerja> {
+	public ComboBoxGroup3Renderer() {
+        setOpaque(true);
+    }
+    @Override
+    public Component getListCellRendererComponent(JList<? extends UnitKerja> list, UnitKerja domain, int index,
+        boolean isSelected, boolean cellHasFocus) {
+        if (domain ==null) {
+        		return null;
+        }else {
+        
+	        String code = domain.getKode1();
+	//        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/" + code + ".png"));
+	        
+	//        setIcon(imageIcon);
+	//        setText("<html><font color=\"black\">" + country.getID() + "&nbsp;&nbsp;<small>" + country.getDescription() + "</small></font></html>");
+	//        setText("<html>" + content + "</html>");
+	        
+	//		String content2 = String.format("%20s %s", country.getKode1(), country.getDescription());
+			String content2 = String.format("%2s %-15s %s", "",domain.getKode1(), domain.getDescription()) ;
+	        setText(content2);
+	        
+	        if (isSelected) {
+	            setBackground(Color.YELLOW);
+	            setForeground(list.getSelectionForeground());
+	        } else {
+	            setBackground(list.getBackground());
+	            setForeground(list.getForeground());
+	        }
+	        return this;
+        }
+    }
 }
 
 class JButtonRenderer implements TableCellRenderer

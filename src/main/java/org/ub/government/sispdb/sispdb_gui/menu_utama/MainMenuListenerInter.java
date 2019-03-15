@@ -20,7 +20,11 @@ public interface MainMenuListenerInter {
    public void menuItem_MasterIkan_ActionPerformed(ActionEvent evt);
    public void menuItem_MasterJenisIkan_ActionPerformed(ActionEvent evt);
    public void menuItem_MasterSubKelas_ActionPerformed(ActionEvent evt);
-   public void menuItem_MasterWilayahAdministratif_ActionPerformed(ActionEvent evt);
+
+   public void menuItem_MasterAlatTangkap_ActionPerformed(ActionEvent evt);
+   public void menuItem_MasterJenisPerairan_ActionPerformed(ActionEvent evt);
+   
+   public void menuItem_MasterLokasiUnitKerja_ActionPerformed(ActionEvent evt);
 
    public void menuItem_TabulasiPerikananTangkapLaut_ActionPerformed(ActionEvent evt);
    public void menuItem_TabulasiPerikananUmumDarat_ActionPerformed(ActionEvent evt);

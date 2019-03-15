@@ -35,6 +35,7 @@ public class IkanSubKelas {
 	
 	@Column(name="DESCRIPTION", length=100)
 	private String description;
+	
 	@Column(name="NOTES", length=350)
 	private String notes;
 	

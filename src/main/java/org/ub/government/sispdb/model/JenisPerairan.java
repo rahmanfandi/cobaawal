@@ -37,6 +37,9 @@ public class JenisPerairan {
 	@Fetch(FetchMode.JOIN)
 	private Set<Upt> uptSet;
 	
+	@Column(name="STATUS_ACTIVE")
+	private boolean statusActive = true;
+
 	@Column(name="CREATED")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date created;
@@ -92,6 +95,13 @@ public class JenisPerairan {
 	}
 	public void setModifiedBy(String modifiedBy) {
 		this.modifiedBy = modifiedBy;
+	}
+	
+	public boolean isStatusActive() {
+		return statusActive;
+	}
+	public void setStatusActive(boolean statusActive) {
+		this.statusActive = statusActive;
 	}
 	@Override
 	public int hashCode() {

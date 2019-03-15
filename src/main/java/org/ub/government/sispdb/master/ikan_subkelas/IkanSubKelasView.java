@@ -92,6 +92,7 @@ public class IkanSubKelasView extends FormTemplate1_IntFrame{
 			
 			getBtnFilter().setVisible(false);
 			
+			
 			setFormButtonAndTextState();
 			
 			getjTable1().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

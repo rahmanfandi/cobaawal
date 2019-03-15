@@ -45,6 +45,8 @@
                       <Component id="tf_Filter1" min="-2" pref="163" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnFilter" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnReloadDB" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="12" max="32767" attributes="0"/>
@@ -61,6 +63,7 @@
                           <Component id="tf_Filter1" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="label_Filter1" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnFilter" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnReloadDB" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane2" min="-2" pref="442" max="-2" attributes="0"/>
@@ -94,7 +97,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" alignment="0" groupAlignment="0" attributes="0">
@@ -107,9 +110,11 @@
                       <Component id="labelGroup2" min="-2" max="-2" attributes="0"/>
                       <Component id="labelGroup1" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="labeNotes" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelGroup3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="11" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="combo_Group3" max="32767" attributes="0"/>
                       <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                       <Component id="combo_Group2" alignment="0" max="32767" attributes="0"/>
                       <Component id="combo_Group1" alignment="0" max="32767" attributes="0"/>
@@ -152,9 +157,14 @@
                       <Component id="labelGroup2" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="combo_Group3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelGroup3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane1" alignment="0" min="-2" pref="125" max="-2" attributes="0"/>
-                      <Component id="labeNotes" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="92" max="-2" attributes="0"/>
+                      <Component id="labeNotes" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
               </Group>
@@ -189,7 +199,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="labelGroup1">
@@ -209,7 +219,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="labelGroup2">
@@ -251,6 +261,26 @@
         <Component class="javax.swing.JLabel" name="labeNotes">
           <Properties>
             <Property name="text" type="java.lang.String" value="NOTES"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="combo_Group3">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="Item 1"/>
+                <StringItem index="1" value="Item 2"/>
+                <StringItem index="2" value="Item 3"/>
+                <StringItem index="3" value="Item 4"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelGroup3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="GROUP3"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -402,6 +432,14 @@
         <Property name="text" type="java.lang.String" value="jLabel2"/>
         <Property name="verticalAlignment" type="int" value="1"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnReloadDB">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Reload"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReloadDBActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

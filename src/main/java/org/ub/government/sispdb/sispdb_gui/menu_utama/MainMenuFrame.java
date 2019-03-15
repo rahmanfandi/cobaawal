@@ -43,10 +43,13 @@ public class MainMenuFrame extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem19 = new javax.swing.JMenuItem();
+        jSeparator6 = new javax.swing.JSeparator();
+        jMenuItem9 = new javax.swing.JMenuItem();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuItemParameterSistem = new javax.swing.JMenuItem();
+        menuItem_InisialisasiDataAwal = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         menuItemPengguna = new javax.swing.JMenuItem();
         menuItemLogPengguna = new javax.swing.JMenuItem();
@@ -54,9 +57,16 @@ public class MainMenuFrame extends javax.swing.JFrame {
         menuItemIkan = new javax.swing.JMenuItem();
         menuItemJenisIkan = new javax.swing.JMenuItem();
         menuItemSubKelas = new javax.swing.JMenuItem();
+        jSeparator7 = new javax.swing.JPopupMenu.Separator();
+        menuItem_JenisPerairan = new javax.swing.JMenuItem();
+        menuItem_AlatTangkap = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
-        menuItemUnitKerja = new javax.swing.JMenuItem();
-        menuItemWilayahAdministratif = new javax.swing.JMenuItem();
+        menuItemUpt = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
+        menuItem_Desa = new javax.swing.JMenuItem();
+        menuItem_Kecamatan = new javax.swing.JMenuItem();
+        menuItem_KabupatenKota = new javax.swing.JMenuItem();
+        menuItem_Propinsi = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         menuItemPerikananTangkapLaut = new javax.swing.JMenuItem();
         menuItemPerikananUmumDarat = new javax.swing.JMenuItem();
@@ -82,15 +92,20 @@ public class MainMenuFrame extends javax.swing.JFrame {
 
         jMenuItem19.setText("jMenuItem19");
 
+        jMenuItem9.setText("jMenuItem9");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jMenu1.setText("Setting");
 
         menuItemParameterSistem.setText("Parameter Sistem");
         jMenu1.add(menuItemParameterSistem);
+
+        menuItem_InisialisasiDataAwal.setText("Inisialisasi Data Awal");
+        jMenu1.add(menuItem_InisialisasiDataAwal);
         jMenu1.add(jSeparator1);
 
-        menuItemPengguna.setText("Pengguna");
+        menuItemPengguna.setText("Pengguna/Enumerator");
         menuItemPengguna.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemPenggunaActionPerformed(evt);
@@ -118,18 +133,43 @@ public class MainMenuFrame extends javax.swing.JFrame {
 
         menuItemSubKelas.setText("Sub Kelas");
         jMenu2.add(menuItemSubKelas);
-        jMenu2.add(jSeparator5);
+        jMenu2.add(jSeparator7);
 
-        menuItemUnitKerja.setText("UPT/Unit Kerja");
-        jMenu2.add(menuItemUnitKerja);
+        menuItem_JenisPerairan.setText("Jenis Perairan");
+        jMenu2.add(menuItem_JenisPerairan);
 
-        menuItemWilayahAdministratif.setText("Wilayah Administratif");
-        menuItemWilayahAdministratif.addActionListener(new java.awt.event.ActionListener() {
+        menuItem_AlatTangkap.setText("Alat Tangkap");
+        menuItem_AlatTangkap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemWilayahAdministratifActionPerformed(evt);
+                menuItem_AlatTangkapActionPerformed(evt);
             }
         });
-        jMenu2.add(menuItemWilayahAdministratif);
+        jMenu2.add(menuItem_AlatTangkap);
+        jMenu2.add(jSeparator5);
+
+        menuItemUpt.setText("Lokasi/UPT");
+        menuItemUpt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemUptActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuItemUpt);
+
+        jMenu6.setText("Wilayah Administratif");
+
+        menuItem_Desa.setText("Desa");
+        jMenu6.add(menuItem_Desa);
+
+        menuItem_Kecamatan.setText("Kecamatan");
+        jMenu6.add(menuItem_Kecamatan);
+
+        menuItem_KabupatenKota.setText("Kabupaten/Kota");
+        jMenu6.add(menuItem_KabupatenKota);
+
+        menuItem_Propinsi.setText("Propinsi");
+        jMenu6.add(menuItem_Propinsi);
+
+        jMenu2.add(jMenu6);
 
         jMenuBar1.add(jMenu2);
 
@@ -222,10 +262,6 @@ public class MainMenuFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_menuItemSyncTaDariTextActionPerformed
 
-    private void menuItemWilayahAdministratifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemWilayahAdministratifActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_menuItemWilayahAdministratifActionPerformed
-
     private void menuItemPenggunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemPenggunaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_menuItemPenggunaActionPerformed
@@ -233,6 +269,14 @@ public class MainMenuFrame extends javax.swing.JFrame {
     private void menuItemLogPenggunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemLogPenggunaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_menuItemLogPenggunaActionPerformed
+
+    private void menuItemUptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemUptActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuItemUptActionPerformed
+
+    private void menuItem_AlatTangkapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_AlatTangkapActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuItem_AlatTangkapActionPerformed
 
     public JDesktopPane getjDesktopPane1() {
         return jDesktopPane1;
@@ -294,9 +338,6 @@ public class MainMenuFrame extends javax.swing.JFrame {
         return menuItemTabulasiKeText;
     }
 
-    public JMenuItem getMenuItemWilayahAdministratif() {
-        return menuItemWilayahAdministratif;
-    }
 
     public JMenuItem getMenuItemIkan() {
         return menuItemIkan;
@@ -306,8 +347,37 @@ public class MainMenuFrame extends javax.swing.JFrame {
         return menuItemSubKelas;
     }
 
-    public JMenuItem getMenuItemUnitKerja() {
-        return menuItemUnitKerja;
+    public JMenuItem getMenuItemUpt() {
+        return menuItemUpt;
+    }
+
+
+    public JMenuItem getMenuItem_AlatTangkap() {
+        return menuItem_AlatTangkap;
+    }
+
+    public JMenuItem getMenuItem_Desa() {
+        return menuItem_Desa;
+    }
+
+    public JMenuItem getMenuItem_InisialisasiDataAwal() {
+        return menuItem_InisialisasiDataAwal;
+    }
+
+    public JMenuItem getMenuItem_JenisPerairan() {
+        return menuItem_JenisPerairan;
+    }
+
+    public JMenuItem getMenuItem_KabupatenKota() {
+        return menuItem_KabupatenKota;
+    }
+
+    public JMenuItem getMenuItem_Kecamatan() {
+        return menuItem_Kecamatan;
+    }
+
+    public JMenuItem getMenuItem_Propinsi() {
+        return menuItem_Propinsi;
     }
 
     
@@ -359,16 +429,20 @@ public class MainMenuFrame extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JPopupMenu.Separator jSeparator7;
     private javax.swing.JMenuItem menuItemDataMasterKeText;
     private javax.swing.JMenuItem menuItemExtractKeExcel;
     private javax.swing.JMenuItem menuItemIkan;
@@ -385,7 +459,13 @@ public class MainMenuFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemSyncMasterDariText;
     private javax.swing.JMenuItem menuItemSyncTaDariText;
     private javax.swing.JMenuItem menuItemTabulasiKeText;
-    private javax.swing.JMenuItem menuItemUnitKerja;
-    private javax.swing.JMenuItem menuItemWilayahAdministratif;
+    private javax.swing.JMenuItem menuItemUpt;
+    private javax.swing.JMenuItem menuItem_AlatTangkap;
+    private javax.swing.JMenuItem menuItem_Desa;
+    private javax.swing.JMenuItem menuItem_InisialisasiDataAwal;
+    private javax.swing.JMenuItem menuItem_JenisPerairan;
+    private javax.swing.JMenuItem menuItem_KabupatenKota;
+    private javax.swing.JMenuItem menuItem_Kecamatan;
+    private javax.swing.JMenuItem menuItem_Propinsi;
     // End of variables declaration//GEN-END:variables
 }

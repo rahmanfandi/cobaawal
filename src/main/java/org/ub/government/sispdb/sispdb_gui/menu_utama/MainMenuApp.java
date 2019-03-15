@@ -11,8 +11,11 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import org.ub.government.sispdb.master.alat_tangkap.AlatTangkapView;
 import org.ub.government.sispdb.master.ikan_jenis.IkanJenisView;
 import org.ub.government.sispdb.master.ikan_subkelas.IkanSubKelasView;
+import org.ub.government.sispdb.master.jenis_perairan.JenisPerairanView;
+import org.ub.government.sispdb.master.lokasi_upt.LokasiUptView;
 import org.ub.government.sispdb.sispdb_gui.master_ikanjenis.IkanJenis_IntFrame;
 import org.ub.government.sispdb.sispdb_gui.master_ikansubkelas.IkanSubKelas_IntFrame;
 import org.ub.government.sispdb.sispdb_gui.master_wilayah.WilayahIntFrame;
@@ -30,6 +33,11 @@ public class MainMenuApp extends MainMenuFrame implements MainMenuListenerInter{
     
     IkanJenisView masterJenisIkanView = null;
     IkanSubKelasView masterSubKelasView = null;
+
+    AlatTangkapView masterAlatTangkapView = null;
+    JenisPerairanView masterJenisPerairanView = null;
+ 
+    LokasiUptView masterLokasiUptView = null;
 
     TabulasiPerikananLautIntFrame tabulasiPerikananLautView = null;
 
@@ -49,8 +57,12 @@ public class MainMenuApp extends MainMenuFrame implements MainMenuListenerInter{
         
         getMenuItemJenisIkan().addActionListener(e -> menuItem_MasterJenisIkan_ActionPerformed(e));
         getMenuItemSubKelas().addActionListener(e -> menuItem_MasterSubKelas_ActionPerformed(e));
+
+        getMenuItem_AlatTangkap().addActionListener(e -> menuItem_MasterAlatTangkap_ActionPerformed(e));
+        getMenuItem_JenisPerairan().addActionListener(e -> menuItem_MasterJenisPerairan_ActionPerformed(e));
         
-        getMenuItemWilayahAdministratif().addActionListener(e -> menuItem_MasterWilayahAdministratif_ActionPerformed(e));
+        getMenuItemUpt().addActionListener(e -> menuItem_MasterLokasiUnitKerja_ActionPerformed(e));
+//        getMenuItemWilayahAdministratif().addActionListener(e -> menuItem_MasterWilayahAdministratif_ActionPerformed(e));
 
         getMenuItemPerikananTangkapLaut().addActionListener(e -> menuItem_TabulasiPerikananTangkapLaut_ActionPerformed(e));
         getMenuItemPerikananUmumDarat().addActionListener(e -> menuItem_TabulasiPerikananTangkapLaut_ActionPerformed(e));
@@ -109,18 +121,43 @@ public class MainMenuApp extends MainMenuFrame implements MainMenuListenerInter{
         masterSubKelasView.toFront();
         
     }
+    @Override
+    public void menuItem_MasterAlatTangkap_ActionPerformed(ActionEvent evt) {
+        if (masterAlatTangkapView ==null) masterAlatTangkapView = new AlatTangkapView();
+        if (! masterAlatTangkapView.isShowing()) {
+            Dimension dim = new Dimension(500, 500);
+            masterAlatTangkapView.setPreferredSize(dim);
+            masterAlatTangkapView.setVisible(true);
+            getjDesktopPane1().add(masterAlatTangkapView);
+        }
+        masterAlatTangkapView.requestFocusInWindow();
+        masterAlatTangkapView.toFront();
+        
+    }
+    @Override
+    public void menuItem_MasterJenisPerairan_ActionPerformed(ActionEvent evt) {
+        if (masterJenisPerairanView ==null) masterJenisPerairanView = new JenisPerairanView();
+        if (! masterJenisPerairanView.isShowing()) {
+            Dimension dim = new Dimension(500, 500);
+            masterJenisPerairanView.setPreferredSize(dim);
+            masterJenisPerairanView.setVisible(true);
+            getjDesktopPane1().add(masterJenisPerairanView);
+        }
+        masterJenisPerairanView.requestFocusInWindow();
+        masterJenisPerairanView.toFront();
+    }
 
     @Override
-    public void menuItem_MasterWilayahAdministratif_ActionPerformed(ActionEvent evt) {
-        if (masterWilayahView ==null) masterWilayahView = new WilayahIntFrame();
-        if (! masterWilayahView.isShowing()) {
+    public void menuItem_MasterLokasiUnitKerja_ActionPerformed(ActionEvent evt) {
+        if (masterLokasiUptView ==null) masterLokasiUptView = new LokasiUptView();
+        if (! masterLokasiUptView.isShowing()) {
             Dimension dim = new Dimension(500, 500);
-            masterWilayahView.setPreferredSize(dim);
-            masterWilayahView.setVisible(true);
-            getjDesktopPane1().add(masterWilayahView);            
+            masterLokasiUptView.setPreferredSize(dim);
+            masterLokasiUptView.setVisible(true);
+            getjDesktopPane1().add(masterLokasiUptView);            
         }
-        masterWilayahView.requestFocusInWindow();
-        masterWilayahView.toFront();
+        masterLokasiUptView.requestFocusInWindow();
+        masterLokasiUptView.toFront();
     }
 
     @Override

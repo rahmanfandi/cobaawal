@@ -22,6 +22,13 @@
         <Property name="text" type="java.lang.String" value="jMenuItem19"/>
       </Properties>
     </Component>
+    <Component class="javax.swing.JSeparator" name="jSeparator6">
+    </Component>
+    <Component class="javax.swing.JMenuItem" name="jMenuItem9">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jMenuItem9"/>
+      </Properties>
+    </Component>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jMenu1">
@@ -34,11 +41,16 @@
                 <Property name="text" type="java.lang.String" value="Parameter Sistem"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuItem_InisialisasiDataAwal">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Inisialisasi Data Awal"/>
+              </Properties>
+            </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuItemPengguna">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Pengguna"/>
+                <Property name="text" type="java.lang.String" value="Pengguna/Enumerator"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemPenggunaActionPerformed"/>
@@ -74,21 +86,58 @@
                 <Property name="text" type="java.lang.String" value="Sub Kelas"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator5">
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator7">
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="menuItemUnitKerja">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItem_JenisPerairan">
               <Properties>
-                <Property name="text" type="java.lang.String" value="UPT/Unit Kerja"/>
+                <Property name="text" type="java.lang.String" value="Jenis Perairan"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="menuItemWilayahAdministratif">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItem_AlatTangkap">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Alat Tangkap"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItem_AlatTangkapActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator5">
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemUpt">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Lokasi/UPT"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemUptActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <Menu class="javax.swing.JMenu" name="jMenu6">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Wilayah Administratif"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemWilayahAdministratifActionPerformed"/>
-              </Events>
-            </MenuItem>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="menuItem_Desa">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Desa"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="menuItem_Kecamatan">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Kecamatan"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="menuItem_KabupatenKota">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Kabupaten/Kota"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="menuItem_Propinsi">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Propinsi"/>
+                  </Properties>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu3">
