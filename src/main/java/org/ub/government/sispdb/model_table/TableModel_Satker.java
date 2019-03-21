@@ -12,16 +12,20 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
-import org.ub.government.sispdb.model.IkanSubKelas;
+
+import org.ub.government.sispdb.model.SatuanKerja;
+import org.ub.government.sispdb.model.SatuanKerja;
+import org.ub.government.sispdb.model.SatuanKerja;
 
 /**
  *
  * @author yhawin
  */
-public class TableModel_IkanSubKelas extends AbstractTableModel{
-    List <IkanSubKelas> list = new ArrayList <IkanSubKelas>();
+public class TableModel_Satker extends AbstractTableModel{
+    List <SatuanKerja> list = new ArrayList <SatuanKerja>();
+    //private String[] columnNames = {“Nama”, “NIM”,”Jurusan”, “Alamat”};
 
-    public TableModel_IkanSubKelas(List<IkanSubKelas> list){
+    public TableModel_Satker(List<SatuanKerja> list){
         this.list = list;
     }
 
@@ -102,15 +106,15 @@ public class TableModel_IkanSubKelas extends AbstractTableModel{
     }
     
     //TAMBAHAN KITA
-    public IkanSubKelas get(int index){
+    public SatuanKerja get(int index){
         return list.get(index);
     }
 
-    public void insert(IkanSubKelas object){
+    public void insert(SatuanKerja object){
         list.add(object);
         fireTableRowsInserted(getRowCount()-1,getRowCount()-1);
     }
-    public void update(IkanSubKelas object, int index){
+    public void update(SatuanKerja object, int index){
         list.set(index, object);
         fireTableRowsUpdated(index,index);
     }

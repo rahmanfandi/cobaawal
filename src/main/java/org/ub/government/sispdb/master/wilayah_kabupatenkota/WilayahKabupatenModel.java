@@ -1,4 +1,4 @@
-package org.ub.government.sispdb.master.lokasi_upt;
+package org.ub.government.sispdb.master.wilayah_kabupatenkota;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,66 +8,55 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.swing.DefaultComboBoxModel;
-
 import org.ub.government.sispdb.commons.CommonLogHelper;
-import org.ub.government.sispdb.model.Upt;
-import org.ub.government.sispdb.model.Upt;
-import org.ub.government.sispdb.model.Desa;
-import org.ub.government.sispdb.model.IkanSubKelas;
-import org.ub.government.sispdb.model.JenisPerairan;
-import org.ub.government.sispdb.model.Upt;
+import org.ub.government.sispdb.model.Kabupaten;
+import org.ub.government.sispdb.model.Kabupaten;
+import org.ub.government.sispdb.model.Kabupaten;
 import org.ub.government.sispdb.model.PemProv;
+import org.ub.government.sispdb.model.Propinsi;
 import org.ub.government.sispdb.model.TabulatorEnumerator;
 import org.ub.government.sispdb.model.UnitKerja;
-import org.ub.government.sispdb.model.Upt;
-import org.ub.government.sispdb.model.jpaservice.DesaJpaService;
-import org.ub.government.sispdb.model.jpaservice.DesaJpaServiceImpl;
 import org.ub.government.sispdb.model.jpaservice.IkanJenisJpaService;
 import org.ub.government.sispdb.model.jpaservice.IkanJenisJpaServiceImpl;
 import org.ub.government.sispdb.model.jpaservice.IkanSubKelasJpaService;
 import org.ub.government.sispdb.model.jpaservice.IkanSubKelasJpaServiceImpl;
-import org.ub.government.sispdb.model.jpaservice.JenisPerairanJpaService;
-import org.ub.government.sispdb.model.jpaservice.JenisPerairanJpaServiceImpl;
-import org.ub.government.sispdb.model.jpaservice.SatuanKerjaJpaService;
-import org.ub.government.sispdb.model.jpaservice.SatuanKerjaJpaServiceImpl;
+import org.ub.government.sispdb.model.jpaservice.KabupatenJpaService;
+import org.ub.government.sispdb.model.jpaservice.KabupatenJpaServiceImpl;
+import org.ub.government.sispdb.model.jpaservice.PropinsiJpaService;
+import org.ub.government.sispdb.model.jpaservice.PropinsiJpaServiceImpl;
 import org.ub.government.sispdb.model.jpaservice.SysvarJpaService;
 import org.ub.government.sispdb.model.jpaservice.SysvarJpaServiceImpl;
 import org.ub.government.sispdb.model.jpaservice.TabulatorEnumeratorJpaService;
 import org.ub.government.sispdb.model.jpaservice.UnitKerjaJpaService;
 import org.ub.government.sispdb.model.jpaservice.UnitKerjaJpaServiceImpl;
-import org.ub.government.sispdb.model.jpaservice.UptJpaService;
-import org.ub.government.sispdb.model.jpaservice.UptJpaServiceImpl;
 import org.ub.government.sispdb.model.jpaservice.UserLogJpaService;
 import org.ub.government.sispdb.model_enum.EnumOrganizationLevel;
 import org.ub.government.sispdb.model_enum.EnumStatusOperasiForm;
 import org.ub.government.sispdb.model_table.ComboBoxModel_IkanSubKelas;
-import org.ub.government.sispdb.model_table.TableModel_Upt;
-import org.ub.government.sispdb.model_table.TableModel_Upt;
-import org.ub.government.sispdb.model_table.TableModel_Upt;
-import org.ub.government.sispdb.model_table.TableModel_Upt;
+import org.ub.government.sispdb.model_table.TableModel_WilayahKabupaten;
+import org.ub.government.sispdb.model_table.TableModel_WilayahKabupaten;
 
 
-public class LokasiUptModel {
+public class WilayahKabupatenModel {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	//1. DAO SERVICE: Utama
 	protected SysvarJpaService sysvarJpaService;
-	protected UptJpaService uptJpaService;
+	protected KabupatenJpaService kabupatenJpaService;
+	
+	private PropinsiJpaService propinsiJpaService;
 	
 	//1.2 Dao Service Pembantu: ComboBox dll
-	protected JenisPerairanJpaService jenisPerairanJpaService;
-	protected DesaJpaService desaJpaService;
-	private UnitKerjaJpaService unitKerjaJpaService;
+	protected UnitKerjaJpaService unitKerjaJpaService;
 	
 	//2. ENTITY: 
 	/*
 	 * Header Opsional/Pembantu untuk Vaadin 8
 	 * digunakan untuk update data jpa. Ingat-ingat sifat JPA
 	 */
-	protected Upt itemHeader = new Upt();
+	protected Kabupaten itemHeader = new Kabupaten();
 
 	protected TabulatorEnumerator userActive = new TabulatorEnumerator();	 //TABULATOR SEPERTI HALNYA USER
 	
@@ -75,20 +64,15 @@ public class LokasiUptModel {
 	 * 3. LIST Utama: Detil ada jika form transaksi -> Diganti set untuk menghindari inkonsitensi
 	 * Set mempunyai method LEBIH SEDIKIT dibanding List. ex.Method objek.get(i) tidak ada
 	 */
-	protected Map<Integer, Upt> listHeader = new HashMap<>();
-	protected TableModel_Upt tableModelHeader = new TableModel_Upt(new ArrayList<>());
+	protected Map<Integer, Kabupaten> listHeader = new HashMap<>();
+	protected TableModel_WilayahKabupaten tableModelHeader = new TableModel_WilayahKabupaten(new ArrayList<>());
 	protected ComboBoxModel_IkanSubKelas comboModel_Group2 = null;
-	protected DefaultComboBoxModel<Desa> comboBoxModel_Desa = new DefaultComboBoxModel<>();
-	protected DefaultComboBoxModel<JenisPerairan> comboBoxModel_JenisPerairan = new DefaultComboBoxModel<>();
-	protected DefaultComboBoxModel<UnitKerja> comboBoxModel_UnitKerja = new DefaultComboBoxModel<>();
 	
 //		Set List<FtSalesd> listDetil = new ArrayList<FtSalesd>();
 
 	//3.2 LIST Pembantu: ComboBox dll
 	protected Set<UnitKerja> listGrup0 = new HashSet<UnitKerja>();
-	protected List<Desa> listGrup1 = new ArrayList<Desa>();
-	protected List<JenisPerairan> listGrup2 = new ArrayList<JenisPerairan>();
-	protected List<UnitKerja> listGrup3 = new ArrayList<UnitKerja>();
+	protected List<Propinsi> listGrup1 = new ArrayList<Propinsi>();
 				
 	//4. Variable Others: Utama dan Pendukung
 //	protected String statusOperasiForm = "OPEN"; //Form Baru ini tidak Pakai
@@ -100,24 +84,25 @@ public class LokasiUptModel {
 	protected boolean aktifkanPerekamanSistem =  true;
 	protected String remoteHostInfo = "";
 	
-	public LokasiUptModel(){
+	public WilayahKabupatenModel(){
 		initVariable();
 		initVariableData();
 	}
 	
 	public void initVariable(){
 		sysvarJpaService = new SysvarJpaServiceImpl();
-		uptJpaService = new UptJpaServiceImpl();
+		kabupatenJpaService = new KabupatenJpaServiceImpl();
 		
-		jenisPerairanJpaService = new JenisPerairanJpaServiceImpl();
-		desaJpaService = new DesaJpaServiceImpl();
-		unitKerjaJpaService = new UnitKerjaJpaServiceImpl();		
+		propinsiJpaService = new PropinsiJpaServiceImpl();
 		
+		unitKerjaJpaService = new UnitKerjaJpaServiceImpl();
 		userActive = new TabulatorEnumerator();
 		remoteHostInfo = "lokal"; 
 		//Sudah Dihindari tapi tidak isa untuk pisah dari Komponen View
 //		setSysvarJpaService((((DashboardUI) getUI().getCurrent()).getSysvarJpaService()));
 //		setfAreaJpaService((((DashboardUI) getUI().getCurrent()).getfAreaJpaService()));
+//		fRegionJpaService  =((DashboardUI) getUI().getCurrent()).getfRegionJpaService();
+//		fDivisionJpaService =((DashboardUI) getUI().getCurrent()).getfDivisionJpaService();
 //	
 //		userJpaService = (((DashboardUI) getUI().getCurrent()).getUserJpaService());
 //		setLogSistemJpaService((((DashboardUI) getUI().getCurrent()).getUserLogJpaService()));		
@@ -142,7 +127,7 @@ public class LokasiUptModel {
 					
 			itemHeader.setModifiedBy(userActive.getUserID());
 			
-			uptJpaService.createObject(itemHeader);
+			kabupatenJpaService.createObject(itemHeader);
 			listHeader.put(itemHeader.getID(), itemHeader);
 			
 			CommonLogHelper.createLogCommon(userJpaService, logSistemJpaService)
@@ -154,7 +139,7 @@ public class LokasiUptModel {
 			itemHeader.setLastModified(new Date());
 			itemHeader.setModifiedBy(userActive.getUserID());
 			
-			uptJpaService.updateObject(itemHeader);
+			kabupatenJpaService.updateObject(itemHeader);
 			
 			CommonLogHelper.createLogCommon(userJpaService, logSistemJpaService)
 				.setUserBean(userActive)
@@ -163,9 +148,9 @@ public class LokasiUptModel {
 			
 		}		
 	}
-	public void deleteFromDatabase(Upt domain_NullIfSingleDelete) {
+	public void deleteFromDatabase(Kabupaten domain_NullIfSingleDelete) {
 		if (domain_NullIfSingleDelete==null) {
-			uptJpaService.removeObject(itemHeader);
+			kabupatenJpaService.removeObject(itemHeader);
 			
 			CommonLogHelper.createLogCommon(userJpaService, logSistemJpaService)
 				.setUserBean(userActive)
@@ -173,7 +158,7 @@ public class LokasiUptModel {
 				.writeWithThread();
 			
 		}else {
-			uptJpaService.removeObject(domain_NullIfSingleDelete);
+			kabupatenJpaService.removeObject(domain_NullIfSingleDelete);
 			
 			CommonLogHelper.createLogCommon(userJpaService, logSistemJpaService)
 				.setUserBean(userActive)
@@ -184,18 +169,18 @@ public class LokasiUptModel {
 		
 	}
 	
-	public Upt isKodeSudahAdaPerCompany(String kodeToCek, PemProv fcompanyBean) {
+	public Kabupaten isKodeSudahAdaPerCompany(String kodeToCek, PemProv fcompanyBean) {
 		/*
 		 * NOTES: SubKelasIkan Sama semua
 		 */
-//		Upt returnValue = new Upt();
-		Upt returnValue = null;
-		List<Upt> listToFind = uptJpaService.findAllByField("kode1", kodeToCek.trim(), null);
+//		Kabupaten returnValue = new Kabupaten();
+		Kabupaten returnValue = null;
+		List<Kabupaten> listToFind = kabupatenJpaService.findAllByField("kode1", kodeToCek.trim(), null);
 		
-		for (Upt domain: listToFind) {
+		for (Kabupaten domain: listToFind) {
 			try {
 //				if (domain.getFdivisionBean().getFcompanyBean().equals(fcompanyBean) ) {
-					returnValue = new Upt();
+					returnValue = new Kabupaten();
 					returnValue = domain;
 					break;
 //				}
@@ -208,32 +193,32 @@ public class LokasiUptModel {
 	
 	public void reloadListHeader(){
 		try {
-			Set<Upt> list = new HashSet<>();
+			Set<Kabupaten> list = new HashSet<>();
 			//Untuk jenis ikan tidak, berlaku kode sama dengan semua jadi tidak ada user Organization Level
 //			if (userActive.getOrganizationLevel().equals(EnumOrganizationLevel.PEMPROP)) {			
-//				list = new HashSet<Upt>(ikanSubKelasJpaService.findAllByDivisionAndShareToCompany(userActive.getUnitKerjaBean().ge, false));
+//				list = new HashSet<Kabupaten>(ikanSubKelasJpaService.findAllByDivisionAndShareToCompany(userActive.getUnitKerjaBean().ge, false));
 //				
 //			}else if (userActive.getOrganizationLevel().equals(EnumOrganizationLevel.PEMDA)) {
-//				list = new HashSet<Upt>(ikanSubKelasJpaService.findAllByCompanyOnly(userActive.getUnitKerjaBean().getFcompanyBean().getID(), false));
+//				list = new HashSet<Kabupaten>(ikanSubKelasJpaService.findAllByCompanyOnly(userActive.getUnitKerjaBean().getFcompanyBean().getID(), false));
 //				
 //			}else if (userActive.getOrganizationLevel().equals(EnumOrganizationLevel.SATKER)) {
-//				list = new HashSet<Upt>(ikanSubKelasJpaService.findAllByCompanyOnly(userActive.getUnitKerjaBean().getFcompanyBean().getID(), false));
+//				list = new HashSet<Kabupaten>(ikanSubKelasJpaService.findAllByCompanyOnly(userActive.getUnitKerjaBean().getFcompanyBean().getID(), false));
 			
 //			} else {
-				list = new HashSet<Upt>(uptJpaService.findAll());
+				list = new HashSet<Kabupaten>(kabupatenJpaService.findAll());
 //			}
-			for (Upt domain: list) listHeader.put(domain.getID(), domain);
+			for (Kabupaten domain: list) listHeader.put(domain.getID(), domain);
 			
 		}catch (Exception e) {
 		}
 		
 	}
-	public void reloadListHeaderWithCriteria(Upt domainCriteria){
+	public void reloadListHeaderWithCriteria(Kabupaten domainCriteria){
 		reloadListHeader();
 		
-//		Set<Upt> listTemp = new HashSet<Upt>(listHeader);
-//		listHeader = new HashSet<Upt>();
-//		for (Upt domain: listTemp) {
+//		Set<Kabupaten> listTemp = new HashSet<Kabupaten>(listHeader);
+//		listHeader = new HashSet<Kabupaten>();
+//		for (Kabupaten domain: listTemp) {
 //			if (		//Jika kosong maka dianggep 
 //					domain.getKode1().trim().toUpperCase().contains(domainCriteria.getKode1().trim().toUpperCase())
 //					&&
@@ -268,26 +253,25 @@ public class LokasiUptModel {
 		try {
 			if (userActive.getOrganizationLevel().equals(EnumOrganizationLevel.PEMPROP) ) {
 				listGrup0 = new HashSet<UnitKerja>(unitKerjaJpaService.findAllByPemProvOnly(userActive.getUnitKerjaBean().getSatuanKerjaBean().getPemdaBean().getPemProvBean() ));
-				listGrup3 = new ArrayList<UnitKerja>(unitKerjaJpaService.findAllByPemProvOnly(userActive.getUnitKerjaBean().getSatuanKerjaBean().getPemdaBean().getPemProvBean() ));
+//				listGrup10 = new HashSet<FRegion>(fRegionJpaService.findAllByDivisionAndShareToCompany(userActive.getFdivisionBean(), true));
 			}else if (userActive.getOrganizationLevel().equals(EnumOrganizationLevel.PEMDA) ) {
 				listGrup0 = new HashSet<UnitKerja>(unitKerjaJpaService.findAllByPemdaOnly(userActive.getUnitKerjaBean().getSatuanKerjaBean().getPemdaBean() ));
-				listGrup3 = new ArrayList<UnitKerja>(unitKerjaJpaService.findAllByPemdaOnly(userActive.getUnitKerjaBean().getSatuanKerjaBean().getPemdaBean() ));
 				
 			}else if (userActive.getOrganizationLevel().equals(EnumOrganizationLevel.SATKER) ) {
 				listGrup0 = new HashSet<UnitKerja>(unitKerjaJpaService.findAllBySatuanKerjaOnly(userActive.getUnitKerjaBean().getSatuanKerjaBean() ));
-				listGrup3 = new ArrayList<UnitKerja>(unitKerjaJpaService.findAllBySatuanKerjaOnly(userActive.getUnitKerjaBean().getSatuanKerjaBean() ));
+//				listGrup10 = new HashSet<FRegion>(fRegionJpaService.findAll());
 			} else {
 				listGrup0 = new HashSet<UnitKerja>(unitKerjaJpaService.findAll());
+				
 			}
 		}catch (Exception e) {
 		}
 		
-		listGrup1 = desaJpaService.findAll();
-		listGrup2 = jenisPerairanJpaService.findAll();
+		listGrup1 = propinsiJpaService.findAll();
 		
 	}
 	public void resetNewObject_Header(){
-		itemHeader = new Upt();
+		itemHeader = new Kabupaten();
 		itemHeader.setKode1("");
 //		itemHeader.setStatusActive(true);
 	}

@@ -61,6 +61,13 @@ public class Upt {
 	
 	@Column(name="STATUS_ACTIVE")
 	private boolean statusActive = true;
+
+	/*
+	 * ADA YANG UPT DAN ADA UPTNYA YANG TIDAK
+	 * JIka bukan UPT makan Alamat Non Aktif
+	 */
+	@Column(name="UPT")
+	private boolean upt = true;
 	
 	@Column(name="CREATED")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -164,6 +171,17 @@ public class Upt {
 	public void setModifiedBy(String modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
+	
+	public boolean isUpt() {
+		return upt;
+	}
+
+
+	public void setUpt(boolean upt) {
+		this.upt = upt;
+	}
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

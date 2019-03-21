@@ -29,6 +29,11 @@
         <Property name="text" type="java.lang.String" value="jMenuItem9"/>
       </Properties>
     </Component>
+    <Component class="javax.swing.JMenuItem" name="jMenuItem7">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jMenuItem7"/>
+      </Properties>
+    </Component>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jMenu1">
@@ -134,6 +139,33 @@
                 <MenuItem class="javax.swing.JMenuItem" name="menuItem_Propinsi">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Propinsi"/>
+                  </Properties>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
+            <Menu class="javax.swing.JMenu" name="jMenu7">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Pemerintahan"/>
+              </Properties>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="menuItemPemProp">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="PemProp"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="menuItemPemDa">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="PemDa"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="menuItemSatuanKerja">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Satuan Kerja"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="menuItemUnitKerja">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Unit Kerja"/>
                   </Properties>
                 </MenuItem>
               </SubComponents>

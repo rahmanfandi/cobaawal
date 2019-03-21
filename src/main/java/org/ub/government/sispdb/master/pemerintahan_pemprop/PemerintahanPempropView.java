@@ -1,4 +1,4 @@
-package org.ub.government.sispdb.master.lokasi_upt;
+package org.ub.government.sispdb.master.pemerintahan_pemprop;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -7,36 +7,30 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.regex.Pattern;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JTable;
-import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 
-import org.ub.government.sispdb.model.Desa;
-import org.ub.government.sispdb.model.JenisPerairan;
-import org.ub.government.sispdb.model.UnitKerja;
 import org.ub.government.sispdb.model_enum.EnumStatusOperasiForm;
-import org.ub.government.sispdb.model_table.TableModel_Upt;
-import org.ub.government.sispdb.sispdb_gui.master_template.FormTemplate2_IntFrame;
+import org.ub.government.sispdb.model_table.TableModel_IkanJenis;
+import org.ub.government.sispdb.model_table.TableModel_WilayahPropinsi;
+import org.ub.government.sispdb.sispdb_gui.master_template.FormTemplate1_IntFrame;
 
 
-public class LokasiUptView extends FormTemplate2_IntFrame{
-	protected LokasiUptController controller;
-	protected LokasiUptModel model;
+public class PemerintahanPempropView extends FormTemplate1_IntFrame{
+	protected PemerintahanPempropController controller;
+	protected PemerintahanPempropModel model;
 	
-	private TableRowSorter<TableModel_Upt> tableRowSorter;
-	
+	private TableRowSorter<TableModel_WilayahPropinsi> tableRowSorter;
+
 	/*
 	 * #3 Interface Listener: agar Class Controller yang memakai tahu itu Method dari mana
 	 * dengan mengunakan @Override
@@ -62,9 +56,9 @@ public class LokasiUptView extends FormTemplate2_IntFrame{
 		//######### Jangan Lupa deklarasinya dan DI BAWAH	
 		OnViewListener onViewListener; 
 		
-		public LokasiUptView() {
+		public PemerintahanPempropView() {
 			super();
-			controller = new LokasiUptController(this);
+			controller = new PemerintahanPempropController(this);
 			model = controller.model;
 			
 			//######### Jangan Lupa deklarasinya dan DARI ATAS
@@ -79,37 +73,33 @@ public class LokasiUptView extends FormTemplate2_IntFrame{
 			 * 3. Init Data Provider: ambil data dari point 1 diatas
 			 * ListDataProvider di gunakan 
 			 */
-			reloadDataProviderOthers(); //Sementara tidak dipakai karena tidak membutuhkan method setFilter
+//			reloadAllProviderOthers(); //Sementara tidak dipakai karena tidak membutuhkan method setFilter
 			reloadDataProviderHeader();
 			
-			reloadComponentComboBox();
+//			reloadAllComponentComboBox();
 			reloadDataGrid1();
 //			setReloadComponentGrid2(); // Tidak Perlu di reload dulu
 			
 		}
 		
 		public void initComponentView(){
-			this.setTitle("LOKASI (UNIT KERJA)");
-			
-			
-//			getLabelGroup1().setVisible(false);
-//			getLabelGroup2().setVisible(false);
-//			getCombo_Group1().setVisible(false);
-//			getCombo_Group2().setVisible(false);
-			getLabeNotes().setVisible(false);
-			getBtnFilter().setVisible(false);
-			getTa_Notes().setVisible(false);
+			this.setTitle("MASTER PROPINSI");
+			//Menonaktifkan komponen-komponent yang tidak perlu
+			getLabelGroup1().setVisible(false);
+			getLabelGroup2().setVisible(false);
+			getCombo_Group1().setVisible(false);
+			getCombo_Group2().setVisible(false);
 
-			setFormButtonAndTextState();
+			getLabeNotes().setVisible(false);
+			getTa_Notes().setVisible(false);
 			
-			getLabeDescription().setText("ALAMAT");
-			getLabelGroup1().setText("DESA");
-			getLabelGroup2().setText("JENIS PERAIRAN");
-			getLabelGroup3().setText("UNIT KERJA");
+			getBtnFilter().setVisible(false);
+						
+			setFormButtonAndTextState();
 			
 			getjTable1().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			
-			
+			getLabelGroup1().setText("");
 		}
 				
 		public void initListener(){
@@ -147,8 +137,7 @@ public class LokasiUptView extends FormTemplate2_IntFrame{
 					
 				}
 			});
-
-
+			
 	        ListSelectionModel table1CellSelectionModel = getjTable1().getSelectionModel();
 	        table1CellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	        table1CellSelectionModel.addListSelectionListener(e -> onViewListener.aksiTable1_ListSelection(e));
@@ -160,9 +149,17 @@ public class LokasiUptView extends FormTemplate2_IntFrame{
 		}
 
 		public void reloadDataProviderOthers(){
-			
 //			beanItemContainerPromo.addAll(model.getListFPromo());
 //			beanItemContainerGrup1.addAll(model.getListGrup1());
+			
+//			getComboSatker().addItem("");
+//			getComboSatker().setItemCaption("", "-- Pilih --");
+//			for (FSatker satkerBean: model.getListFSatker()) {
+//				getComboSatker().addItem(satkerBean.getKode1());
+//				getComboSatker().setItemCaption(satkerBean.getKode1(), satkerBean.getKode1() + " " + satkerBean.getName());
+//			}
+			
+			
 			
 		}
 		
@@ -170,62 +167,13 @@ public class LokasiUptView extends FormTemplate2_IntFrame{
 			//Buat Fresh
 //			dataProvider = new ListDataProvider<FArea>(model.getListHeader());
 //			dataProvider.refreshAll();
-			if (getTf_Filter1().getText().isEmpty()) {
-				model.tableModelHeader = new TableModel_Upt(new ArrayList<>(model.listHeader.values()) );
-			}else {
-				model.tableModelHeader = new TableModel_Upt(new ArrayList<>(model.listHeader.values()) );
-			}
+			model.tableModelHeader = new TableModel_WilayahPropinsi(new ArrayList<>(model.listHeader.values()));
 			
 		}	
 		
 		//### Not Override
 		public void reloadComponentComboBox(){
-			//Change To Array
-//			Desa[] itemsArray1 = new Desa[model.listGrup1.size()];
-//			itemsArray1 = model.listGrup1.toArray(itemsArray1);
-//
-//			List<JenisPerairan> list2= new ArrayList<>();
-//			JenisPerairan item2_1 = new JenisPerairan(); item2_1.setID(1); item2_1.setKode1("001"); item2_1.setDescription("DARAT");
-//			JenisPerairan item2_2 = new JenisPerairan(); item2_2.setID(2); item2_2.setKode1("002"); item2_2.setDescription("LAUT");
-//			list2.add(item2_1); list2.add(item2_2);
-//			
-//			JenisPerairan[] itemsArray2 = new JenisPerairan[list2.size()];
-//			itemsArray2 = list2.toArray(itemsArray2);
-//
-//			UnitKerja[] itemsArray3 = new UnitKerja[model.listGrup3.size()];
-//			itemsArray2 = model.listGrup3.toArray(itemsArray2);
-
-			List<UnitKerja> list3= new ArrayList<>();
-			UnitKerja item3_1 = new UnitKerja(); item3_1.setID(1); item3_1.setKode1("001"); item3_1.setDescription("UKER 1");
-			UnitKerja item3_2 = new UnitKerja(); item3_2.setID(2); item3_2.setKode1("002"); item3_2.setDescription("UKER 2");
-			list3.add(item3_1); list3.add(item3_2);
-			
-			model.comboBoxModel_Desa.removeAllElements();
-			for (Desa domain: model.listGrup1) model.comboBoxModel_Desa.addElement(domain);
-			try {
-				getCombo_Group1().setModel(model.comboBoxModel_Desa);
-				if (model.comboBoxModel_Desa.getSize()>0) getCombo_Group1().setRenderer(new ComboBoxGroup1Renderer());
-			}catch (Exception e) {
-				e.printStackTrace();
-			}	
-			
-			model.comboBoxModel_JenisPerairan.removeAllElements();
-			for (JenisPerairan domain: model.listGrup2) model.comboBoxModel_JenisPerairan.addElement(domain);
-			try {
-				getCombo_Group2().setModel(model.comboBoxModel_JenisPerairan);
-				if (model.comboBoxModel_JenisPerairan.getSize()>0) getCombo_Group2().setRenderer(new ComboBoxGroup2Renderer());
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-			model.comboBoxModel_UnitKerja.removeAllElements();
-			for (UnitKerja domain: model.listGrup3) model.comboBoxModel_UnitKerja.addElement(domain);
-			try {
-				getCombo_Group3().setModel( model.comboBoxModel_UnitKerja );				
-				if (model.comboBoxModel_UnitKerja.getSize()>0) getCombo_Group3().setRenderer(new ComboBoxGroup3Renderer());
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
+						
 		}
 
 		public void reloadDataGrid1(){
@@ -243,17 +191,18 @@ public class LokasiUptView extends FormTemplate2_IntFrame{
 			//Tidak bisa otomatis saat: Jadi harus dipangil secara Manual
 			setGrid1Footer();	
 			
-			tableRowSorter = new TableRowSorter<TableModel_Upt>(model.tableModelHeader);
+			tableRowSorter = new TableRowSorter<TableModel_WilayahPropinsi>(model.tableModelHeader);
 			getjTable1().setRowSorter(tableRowSorter);
+
 			
 		}
-		
+
 		public void setTableModelOrFilter() {
-			RowFilter<TableModel_Upt,Object> rowFilter = null;
+			RowFilter<TableModel_WilayahPropinsi,Object> rowFilter = null;
 			
-			ArrayList<RowFilter<TableModel_Upt, Object>> arrListFilters = new ArrayList<RowFilter<TableModel_Upt,Object>>();
-			RowFilter<TableModel_Upt,Object> kode1_Filter = null;
-			RowFilter<TableModel_Upt,Object> desc_Filter = null;
+			ArrayList<RowFilter<TableModel_WilayahPropinsi, Object>> arrListFilters = new ArrayList<RowFilter<TableModel_WilayahPropinsi,Object>>();
+			RowFilter<TableModel_WilayahPropinsi,Object> kode1_Filter = null;
+			RowFilter<TableModel_WilayahPropinsi,Object> desc_Filter = null;
 			
 		    try {
 		    		kode1_Filter = RowFilter.regexFilter("(?i)" + getTf_Filter1().getText(), getjTable1().getColumnModel().getColumnIndex("KODE1"));	//supaya tidak case Sensitif	
@@ -272,12 +221,12 @@ public class LokasiUptView extends FormTemplate2_IntFrame{
 		    tableRowSorter.setRowFilter(rowFilter);
 
 		}		
-		
-		public void setTableModelFilter() {
-		    RowFilter<TableModel_Upt, Object> rf = null;
+				
+		public void setTableModelFilter(int columnIndex) {
+		    RowFilter<TableModel_WilayahPropinsi, Object> rf = null;
 		    // If current expression doesn't parse, don't update.
 		    try {
-		    		rf = RowFilter.regexFilter(getTf_Filter1().getText(), 0);
+		    		rf = RowFilter.regexFilter(getTf_Filter1().getText(), columnIndex);		    		
 		    } catch (java.util.regex.PatternSyntaxException e) {
 		      return;
 		    }
@@ -380,12 +329,14 @@ public class LokasiUptView extends FormTemplate2_IntFrame{
 	        tableCellRendererStok.setForeground(Color.BLUE);
 	        tableCellRendererStok.setHorizontalAlignment(JLabel.CENTER);
 	                
-//	        getjTable1().getColumnModel().getColumn(0).setCellRenderer(tableCellRendererSpriceAltRetailPcs);        
+//	        getjTable1().getColumnModel().getColumn(2).setCellRenderer(tableCellRendererSpriceAltRetailPcs);        
 //	        getjTable1().getColumnModel().getColumn(3).setCellRenderer(tableCellRendererNumber);        
+//	        getjTable1().getColumnModel().getColumn(6).setCellRenderer(tableCellRendererStok);
 			
-	        //Supaya Row nya dipilih
+	        //supaya rownya yang bisa dipilih
 	        getjTable1().setCellSelectionEnabled(false);
 	        getjTable1().setRowSelectionAllowed(true);
+
 		}
 		
 		public void setGrid1Footer(){
@@ -403,6 +354,41 @@ public class LokasiUptView extends FormTemplate2_IntFrame{
 		}
 		
 		public void setGrid2Properties(){
+			
+//			for (Column c : getGrid2().getColumns()) {
+//	        	c.setHidable(true);
+//	        	c.setHidden(true);
+//	        }
+//			
+//			getGrid2().getColumn("nourut").setHidden(false);
+//			getGrid2().getColumn("tipePembayaranDcv").setHidden(false);
+////			getGrid2().getColumn("fvendorBean.vcode").setHidden(false);
+//			
+//			//Formatting
+//			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+//			grid1.getColumn("paymentDate").setRenderer(new DateRenderer(sdf));
+	//
+//			//Aligment: Defautnya Left Aligment
+//			getGrid2().setCellStyleGenerator(new Grid.CellStyleGenerator() {
+//	            @Override
+//	            public String getStyle(Grid.CellReference cellReference) {
+//	                if ("amountafterdiscafterppn".equals(cellReference.getPropertyId())) {
+//	                    // when the current cell is number such as age, align text to right
+//	                    return "rightAligned";
+//	                } else if ("amount".equals(cellReference.getPropertyId())){                	
+//	                	return "rightAligned";
+//	                	
+//	                } else if ("tipePembayaranDcv".equals(cellReference.getPropertyId())){                	
+//	                	return "centerAligned";
+//	                } else if ("paymentDate".equals(cellReference.getPropertyId())){
+//	                	return "centerAligned";
+//	                } else {
+//	                    // otherwise, align text to left
+//	                    return "leftAligned";
+//	                }
+//	            }
+//	        });			
+
 		}
 		
 		public void setGrid2Footer(){
@@ -416,8 +402,7 @@ public class LokasiUptView extends FormTemplate2_IntFrame{
 //			footerRowGrid2.getCell("kode1").setText("*Rec " + nf.format(model.getListHeader().size()) + ",  Selected " + grid1.getSelectedItems().size());
 			
 		}
-		
-		
+			
 		public void setGrid1MultiSelectMode(boolean isMultiSelect) {
 			if (isMultiSelect) {
 //				btnNewForm.setEnabled(false);
@@ -496,26 +481,17 @@ public class LokasiUptView extends FormTemplate2_IntFrame{
 			
 		}
 		
-
 	    public void readBinderHeader() {
             getTf_ID().setText(model.itemHeader.getKode1());
             getTf_Description().setText(model.itemHeader.getDescription());
 //            getTa_Notes().setText(model.itemHeader.getNotes());
             getjCheckBox1().setSelected(model.itemHeader.isStatusActive());
-            
-            getCombo_Group1().setSelectedItem( model.itemHeader.getDesaBean()); 
-            getCombo_Group2().setSelectedItem( model.itemHeader.getJenisPerairanBean()); 
-            getCombo_Group3().setSelectedItem( model.itemHeader.getUnitKerjaBean()); 
 	    }
 		public void writeBinderHeader() {
 			model.itemHeader.setKode1(getTf_ID().getText().trim());
 			model.itemHeader.setDescription(getTf_Description().getText().trim());
 //			model.itemHeader.setNotes(getTa_Notes().getText().trim());
 			model.itemHeader.setStatusActive(getjCheckBox1().isSelected());
-			
-			model.itemHeader.setDesaBean((Desa) getCombo_Group1().getSelectedItem()); 
-			model.itemHeader.setJenisPerairanBean((JenisPerairan) getCombo_Group2().getSelectedItem()); 
-			model.itemHeader.setUnitKerjaBean((UnitKerja) getCombo_Group3().getSelectedItem()); 
 		}
 
 //		@Override
@@ -551,119 +527,3 @@ public class LokasiUptView extends FormTemplate2_IntFrame{
 //		}
 
 }
-
-class ComboBoxGroup1Renderer extends JLabel implements ListCellRenderer<Desa> {
-	public ComboBoxGroup1Renderer() {
-        setOpaque(true);
-    }
-    @Override
-    public Component getListCellRendererComponent(JList<? extends Desa> list, Desa domain, int index,
-        boolean isSelected, boolean cellHasFocus) {
-        if (domain ==null) {
-        		return null;
-        }else {
-        
-	        String code = domain.getKode1();
-	//        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/" + code + ".png"));
-	        
-	//        setIcon(imageIcon);
-	//        setText("<html><font color=\"black\">" + country.getID() + "&nbsp;&nbsp;<small>" + country.getDescription() + "</small></font></html>");
-	//        setText("<html>" + content + "</html>");
-	        
-	//		String content2 = String.format("%20s %s", country.getKode1(), country.getDescription());
-			String content2 = String.format("%2s %-15s %s", "",domain.getKode1(), domain.getDescription()) ;
-	        setText(content2);
-	        
-	        if (isSelected) {
-	            setBackground(Color.YELLOW);
-	            setForeground(list.getSelectionForeground());
-	        } else {
-	            setBackground(list.getBackground());
-	            setForeground(list.getForeground());
-	        }
-	        return this;
-        }
-    }
-}
-
-class ComboBoxGroup2Renderer extends JLabel implements ListCellRenderer<JenisPerairan> {
-	public ComboBoxGroup2Renderer() {
-        setOpaque(true);
-    }
-    @Override
-    public Component getListCellRendererComponent(JList<? extends JenisPerairan> list, JenisPerairan domain, int index,
-        boolean isSelected, boolean cellHasFocus) {
-        if (domain ==null) {
-        		return null;
-        }else {
-	        String code = domain.getKode1();
-	        try {
-				String content2 = String.format("%2s %-15s %s", "",domain.getKode1(), domain.getDescription()) ;
-		        setText(content2);
-		        
-		        if (isSelected) {
-		            setBackground(Color.YELLOW);
-		            setForeground(list.getSelectionForeground());
-		        } else {
-		            setBackground(list.getBackground());
-		            setForeground(list.getForeground());
-		        }
-	        }catch (Exception e) {}
-	        return this;
-        }
-    }
-}
-
-class ComboBoxGroup3Renderer extends JLabel implements ListCellRenderer<UnitKerja> {
-	public ComboBoxGroup3Renderer() {
-        setOpaque(true);
-    }
-    @Override
-    public Component getListCellRendererComponent(JList<? extends UnitKerja> list, UnitKerja domain, int index,
-        boolean isSelected, boolean cellHasFocus) {
-        if (domain ==null) {
-        		return null;
-        }else {
-        
-	        	try {
-		        String code = domain.getKode1();
-		//        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/" + code + ".png"));
-		        
-		//        setIcon(imageIcon);
-		//        setText("<html><font color=\"black\">" + country.getID() + "&nbsp;&nbsp;<small>" + country.getDescription() + "</small></font></html>");
-		//        setText("<html>" + content + "</html>");
-		        
-		//		String content2 = String.format("%20s %s", country.getKode1(), country.getDescription());
-				String content2 = String.format("%2s %-15s %s", "",domain.getKode1(), domain.getDescription()) ;
-		        setText(content2);
-		        
-		        if (isSelected) {
-		            setBackground(Color.YELLOW);
-		            setForeground(list.getSelectionForeground());
-		        } else {
-		            setBackground(list.getBackground());
-		            setForeground(list.getForeground());
-		        }
-	        	}catch (Exception e) {
-			}
-	        return this;
-        }
-    }
-}
-
-class JButtonRenderer implements TableCellRenderer
-{
-  private TableCellRenderer renderer;
-  
-  public JButtonRenderer(TableCellRenderer renderer){
-    this.renderer = renderer;
-  }
-  
-  public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col){
-    if(value instanceof Component)
-      return (Component) value;
-    return renderer.getTableCellRendererComponent(table,value,isSelected,hasFocus,row,col);
-  }
-  
-}
-

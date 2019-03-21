@@ -43,6 +43,9 @@ public class Kabupaten {
 	@Column(name="DESCRIPTION", length=100)
 	private String description;
 	
+	@Column(name="STATUS_ACTIVE")
+	private boolean statusActive = true;
+
 	@Column(name="CREATED")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date created;
@@ -51,6 +54,14 @@ public class Kabupaten {
 	private Date lastModified;
 	@Column(name="MODIFIED_BY", length=20) 
 	private String modifiedBy;
+	
+	
+	public boolean isStatusActive() {
+		return statusActive;
+	}
+	public void setStatusActive(boolean statusActive) {
+		this.statusActive = statusActive;
+	}
 	public int getID() {
 		return ID;
 	}

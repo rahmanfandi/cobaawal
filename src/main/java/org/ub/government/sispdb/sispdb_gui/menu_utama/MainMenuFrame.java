@@ -27,6 +27,8 @@ public class MainMenuFrame extends javax.swing.JFrame {
     void initViews(){
         this.pack();
         this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+        
+        getMenuItemIkan().setVisible(false);
        
     }
 
@@ -45,6 +47,7 @@ public class MainMenuFrame extends javax.swing.JFrame {
         jMenuItem19 = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JSeparator();
         jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -67,6 +70,11 @@ public class MainMenuFrame extends javax.swing.JFrame {
         menuItem_Kecamatan = new javax.swing.JMenuItem();
         menuItem_KabupatenKota = new javax.swing.JMenuItem();
         menuItem_Propinsi = new javax.swing.JMenuItem();
+        jMenu7 = new javax.swing.JMenu();
+        menuItemPemProp = new javax.swing.JMenuItem();
+        menuItemPemDa = new javax.swing.JMenuItem();
+        menuItemSatuanKerja = new javax.swing.JMenuItem();
+        menuItemUnitKerja = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         menuItemPerikananTangkapLaut = new javax.swing.JMenuItem();
         menuItemPerikananUmumDarat = new javax.swing.JMenuItem();
@@ -93,6 +101,8 @@ public class MainMenuFrame extends javax.swing.JFrame {
         jMenuItem19.setText("jMenuItem19");
 
         jMenuItem9.setText("jMenuItem9");
+
+        jMenuItem7.setText("jMenuItem7");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -170,6 +180,22 @@ public class MainMenuFrame extends javax.swing.JFrame {
         jMenu6.add(menuItem_Propinsi);
 
         jMenu2.add(jMenu6);
+
+        jMenu7.setText("Pemerintahan");
+
+        menuItemPemProp.setText("PemProp");
+        jMenu7.add(menuItemPemProp);
+
+        menuItemPemDa.setText("PemDa");
+        jMenu7.add(menuItemPemDa);
+
+        menuItemSatuanKerja.setText("Satuan Kerja");
+        jMenu7.add(menuItemSatuanKerja);
+
+        menuItemUnitKerja.setText("Unit Kerja");
+        jMenu7.add(menuItemUnitKerja);
+
+        jMenu2.add(jMenu7);
 
         jMenuBar1.add(jMenu2);
 
@@ -380,6 +406,22 @@ public class MainMenuFrame extends javax.swing.JFrame {
         return menuItem_Propinsi;
     }
 
+    public JMenuItem getMenuItemPemDa() {
+        return menuItemPemDa;
+    }
+
+    public JMenuItem getMenuItemPemProp() {
+        return menuItemPemProp;
+    }
+
+    public JMenuItem getMenuItemSatuanKerja() {
+        return menuItemSatuanKerja;
+    }
+
+    public JMenuItem getMenuItemUnitKerja() {
+        return menuItemUnitKerja;
+    }
+
     
     
     
@@ -430,11 +472,13 @@ public class MainMenuFrame extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
@@ -452,13 +496,17 @@ public class MainMenuFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemLogPengguna;
     private javax.swing.JMenuItem menuItemLogout;
     private javax.swing.JMenuItem menuItemParameterSistem;
+    private javax.swing.JMenuItem menuItemPemDa;
+    private javax.swing.JMenuItem menuItemPemProp;
     private javax.swing.JMenuItem menuItemPengguna;
     private javax.swing.JMenuItem menuItemPerikananTangkapLaut;
     private javax.swing.JMenuItem menuItemPerikananUmumDarat;
+    private javax.swing.JMenuItem menuItemSatuanKerja;
     private javax.swing.JMenuItem menuItemSubKelas;
     private javax.swing.JMenuItem menuItemSyncMasterDariText;
     private javax.swing.JMenuItem menuItemSyncTaDariText;
     private javax.swing.JMenuItem menuItemTabulasiKeText;
+    private javax.swing.JMenuItem menuItemUnitKerja;
     private javax.swing.JMenuItem menuItemUpt;
     private javax.swing.JMenuItem menuItem_AlatTangkap;
     private javax.swing.JMenuItem menuItem_Desa;

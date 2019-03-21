@@ -12,16 +12,21 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
-import org.ub.government.sispdb.model.IkanSubKelas;
+
+import org.ub.government.sispdb.model.PemProv;
+import org.ub.government.sispdb.model.PemProv;
+import org.ub.government.sispdb.model.PemProv;
+import org.ub.government.sispdb.model.PemProv;
 
 /**
  *
  * @author yhawin
  */
-public class TableModel_IkanSubKelas extends AbstractTableModel{
-    List <IkanSubKelas> list = new ArrayList <IkanSubKelas>();
+public class TableModel_PemProv extends AbstractTableModel{
+    List <PemProv> list = new ArrayList <PemProv>();
+    //private String[] columnNames = {“Nama”, “NIM”,”Jurusan”, “Alamat”};
 
-    public TableModel_IkanSubKelas(List<IkanSubKelas> list){
+    public TableModel_PemProv(List<PemProv> list){
         this.list = list;
     }
 
@@ -102,15 +107,15 @@ public class TableModel_IkanSubKelas extends AbstractTableModel{
     }
     
     //TAMBAHAN KITA
-    public IkanSubKelas get(int index){
+    public PemProv get(int index){
         return list.get(index);
     }
 
-    public void insert(IkanSubKelas object){
+    public void insert(PemProv object){
         list.add(object);
         fireTableRowsInserted(getRowCount()-1,getRowCount()-1);
     }
-    public void update(IkanSubKelas object, int index){
+    public void update(PemProv object, int index){
         list.set(index, object);
         fireTableRowsUpdated(index,index);
     }
