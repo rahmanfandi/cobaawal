@@ -6,7 +6,7 @@
 package org.ub.government.sispdb.sispdb_gui.menu_utama;
 
 /**
- * 
+ * ksdjkalsdj
  * @author yhawin
  */
 
